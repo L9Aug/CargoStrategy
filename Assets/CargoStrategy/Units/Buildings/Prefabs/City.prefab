@@ -122,12 +122,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ad2ab23f17b774e894bf20ef7aaf6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_team: 0
   Connections: []
   NodeConnections: []
-  ProductionOutput: {fileID: 0}
-  OptimalOutputPerSecond: 0
-  ProductionInput: {fileID: 0}
-  InputTarget: 0
+  ProductionOutput: {fileID: 114642632444963738, guid: 2256fd5d77a7ef54bbbe07f3f9431049,
+    type: 2}
+  OptimalOutputPerSecond: 1
+  ProductionInput: {fileID: 114711829613904610, guid: 1fef85ea919da594e898d88eeba2b282,
+    type: 2}
+  InputTarget: 2
 --- !u!136 &136347732248863688
 CapsuleCollider:
   m_ObjectHideFlags: 1

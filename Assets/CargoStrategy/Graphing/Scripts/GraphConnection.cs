@@ -135,6 +135,7 @@ namespace CargoStrategy.Graphing
                 timer += Time.deltaTime;
             }
 
+            IsDestroyed = false;
             Reconnect();
 
             if (OnRepaired != null)

@@ -12,6 +12,7 @@ namespace CargoStrategy.Graphing
         protected float m_costSoFar;
         protected float m_estimatedTotalCost;
         protected float m_heuristic;
+        protected IGraphNode m_root;
         public int m_team;
         protected int m_supplierCount;
 
@@ -56,6 +57,19 @@ namespace CargoStrategy.Graphing
             }
         }
 
+        public IGraphNode Root
+        {
+            get
+            {
+                return m_root;
+            }
+
+            set
+            {
+                m_root = value;
+            }
+        }
+
         public Vector3 Position
         {
             get
@@ -87,7 +101,7 @@ namespace CargoStrategy.Graphing
 
         public IGraphConnection GetAdjacentConnectionTo(IGraphNode to)
         {
-            return Connections.Find(x => x.To == to);
+            return Connections.Find(x => (x.To == to) || (x.From == to));
         }
 
         public float GetDistanceTo(IGraphNode node)
