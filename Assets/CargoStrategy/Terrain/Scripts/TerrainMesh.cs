@@ -36,12 +36,12 @@ namespace CargoStrategy.Terrain
                 }
                 int width = m_heightMap.width;
                 int height = m_heightMap.height;
-                List<Vector3> vertices = new List<Vector3>();
+                List<Vector3> verticies = new List<Vector3>();
                 for (int x = 0; x < width; x++)
                 {
                     for (int y = 0; y < height; y++)
                     {
-                        vertices.Add(new Vector3(x, m_heightMap.GetPixel(x,y).grayscale * m_heightScale, y));
+                        verticies.Add(new Vector3(x, m_heightMap.GetPixel(x,y).grayscale * m_heightScale, y));
                     }
                 }
                 List<int> indicies = new List<int>();
@@ -58,7 +58,12 @@ namespace CargoStrategy.Terrain
                         indicies.Add(x + 1 + ((y + 1) * width));
                     }
                 }
-                m_mesh.SetVertices(vertices);
+                RoadMesh[] roads = FindObjectsOfType<RoadMesh>();
+                for (int i = 0; i < roads.Length; i++)
+                {
+                    FlattenLine(verticies, roads[i].Start.position, roads[i].End.position, 5.0f);
+                }
+                m_mesh.SetVertices(verticies);
                 m_mesh.SetIndices(indicies.ToArray(), MeshTopology.Triangles, 0);
                 m_mesh.RecalculateNormals();
             }
@@ -76,9 +81,51 @@ namespace CargoStrategy.Terrain
         {
             if (m_heightMap != null)
             {
-                return m_heightMap.GetPixelBilinear(position.x / m_heightMap.width, position.y / m_heightMap.height).grayscale * m_heightScale;
+                return m_heightMap.GetPixelBilinear((position.x / m_heightMap.width), (position.z / m_heightMap.height)).grayscale * m_heightScale;
             }
-            return 0.0f;
+            return -1.0f;
+        }
+
+        private void FlattenLine(List<Vector3> verticies, Vector3 lineStart, Vector3 lineEnd, float lineWidth)
+        {
+            Vector3 lineNormal = lineEnd - lineStart;
+            for (int i = 0; i < verticies.Count; i++)
+            {
+                Vector3 vertex = verticies[i];
+                if (IsInLineSegment(vertex, lineStart, lineEnd))
+                {
+                    Vector3 closest = GetClosestPointOnLine(vertex, lineStart, lineNormal);
+                    float distance = DistanceIgnoringY(closest, vertex);
+                    if (distance <= lineWidth)
+                    {
+                        float t = distance / lineWidth;
+                        t = (Mathf.Sin((t * Mathf.PI) - (Mathf.PI * 0.5f)) + 1.0f) / 2.0f;
+                        vertex.y = Mathf.Lerp(closest.y, vertex.y, t);
+                    }
+                    verticies[i] = vertex;
+                }
+            }
+        }
+
+        private float DistanceIgnoringY(Vector3 p1, Vector3 p2)
+        {
+            p1.y = 0.0f;
+            p2.y = 0.0f;
+            return Vector3.Distance(p1, p2);
+        }
+
+        private bool IsInLineSegment(Vector3 position, Vector3 lineStart, Vector3 lineEnd)
+        {
+            Vector3 toStart = lineStart - position;
+            Vector3 toEnd = lineEnd - position;
+            Vector3 lineNormal = lineEnd - lineStart;
+            return (Vector3.Dot(toStart, lineNormal) < 0.0f && Vector3.Dot(toEnd, lineNormal) > 0.0f);
+        }
+
+        private Vector3 GetClosestPointOnLine(Vector3 position, Vector3 lineStart, Vector3 lineNormal)
+        {
+            position -= lineStart;
+            return Vector3.Project(position, lineNormal) + lineStart;
         }
     }
 
