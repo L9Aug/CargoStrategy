@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CargoStrategy.Generic;
 
 namespace CargoStrategy.UserInput
 {
 
-    public class UserInputDispatcher : MonoBehaviour
+    public class UserInputDispatcher : Singleton<UserInputDispatcher>
     {
         public event System.Action Player1FiringEvent;
         public event System.Action Player2FiringEvent;
@@ -37,38 +38,38 @@ namespace CargoStrategy.UserInput
             }
         }
 
-        public static float GetPlayer1HorizontalMovement()
+        public float GetPlayer1HorizontalMovement()
         {
             return Input.GetAxis("P1Horizontal");
         }
-        public static float GetPlayer1VerticalMovement()
+        public float GetPlayer1VerticalMovement()
         {
             return Input.GetAxis("P2Vertical");
         }
 
-        public static float GetPlayer1HorizontalLook()
+        public float GetPlayer1HorizontalLook()
         {
             return Input.GetAxis("P1LookHorizontal");
         }
-        public static float GetPlayer1VerticalLook()
+        public float GetPlayer1VerticalLook()
         {
             return Input.GetAxis("P1LookVertical");
         }
 
-        public static float GetPlayer2HorizontalMovement()
+        public float GetPlayer2HorizontalMovement()
         {
             return Input.GetAxis("P2Horizontal");
         }
-        public static float GetPlayer2VerticalMovement()
+        public float GetPlayer2VerticalMovement()
         {
             return Input.GetAxis("P2Vertical");
         }
 
-        public static float GetPlayer2HorizontalLook()
+        public float GetPlayer2HorizontalLook()
         {
             return Input.GetAxis("P2LookHorizontal");
         }
-        public static float GetPlayer2VerticalLook()
+        public float GetPlayer2VerticalLook()
         {
             return Input.GetAxis("P2LookVertical");
         }
