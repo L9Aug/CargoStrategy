@@ -132,6 +132,18 @@ namespace CargoStrategy.UserInput
             }
         }
 
+        public bool GetPlayerMapInput(PlayerList player)
+        {
+            switch (player)
+            {
+                case PlayerList.Player1:
+                    return Input.GetAxis("P1MapOverview") > 0.2 ? true : false;
+                case PlayerList.Player2:
+                    return Input.GetAxis("P2MapOverview") > 0.2 ? true : false;
+                default:
+                    return false;
+            }
+        }
 
 
     }

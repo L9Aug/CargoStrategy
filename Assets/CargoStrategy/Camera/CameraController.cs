@@ -51,8 +51,11 @@ namespace CargoStrategy.Camera
 
         }
 
+        float LerpTime = 0.3f;
+
         public void MapView()
         {
+
 
         }
 
@@ -71,7 +74,7 @@ namespace CargoStrategy.Camera
             BoolCondition ShotLanded = new BoolCondition(delegate () { return myCannon.myProjectile.myModel == null; });
             BoolCondition ShotLanded2 = new BoolCondition(delegate () { return myCannon.myProjectile.myModel == null; });
             BoolCondition ShotLandedAndWait = new BoolCondition(delegate () { return CurrentParentProjRemoved; });
-            BoolCondition OpenMapViewMode = new BoolCondition(delegate () { return false; });
+            BoolCondition OpenMapViewMode = new BoolCondition(delegate () { return UserInput.UserInputDispatcher.Instance.GetPlayerMapInput(myCannon.myPlayer); });
             NotCondition CloseMapViewMode = new NotCondition(OpenMapViewMode);
 
             //Transitions
