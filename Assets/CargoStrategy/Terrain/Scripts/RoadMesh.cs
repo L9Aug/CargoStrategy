@@ -7,6 +7,8 @@ namespace CargoStrategy.Terrain
 
     public class RoadMesh : MonoBehaviour {
 
+        public static List<RoadMesh> RoadMeshes = new List<RoadMesh>();
+
         [SerializeField]
         private Transform m_start;
 
@@ -46,6 +48,13 @@ namespace CargoStrategy.Terrain
         public void Awake()
         {
             RebuildMesh();
+            RoadMeshes.Add(this);
+            OnDestroyed += StartRepair;
+        }
+
+        public void OnDestroy()
+        {
+            RoadMeshes.Remove(this);
         }
 
         private void RebuildMesh()
@@ -63,6 +72,16 @@ namespace CargoStrategy.Terrain
                 m_roadSections.Add(road);
                 distanceFromstart += m_prefabLength;
             }
+        }
+
+        private void StartRepair()
+        {
+            Invoke("Repair", 5.0f);
+        }
+
+        private void Repair()
+        {
+            SetDestroy(false);
         }
 
         public void SetDestroy(bool destroyed)
