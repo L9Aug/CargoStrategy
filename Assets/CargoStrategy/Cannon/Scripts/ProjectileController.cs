@@ -57,14 +57,22 @@ namespace CargoStrategy.Cannon
         public void OnCollisionEnter(Collision collision)
         {
             Collided = true;
+            RoadMesh closestMesh = null;
+            float closestDistance = -1.0f;
             for (int i = 0; i < RoadMesh.RoadMeshes.Count; i++)
             {
                 RoadMesh mesh = RoadMesh.RoadMeshes[i];
-                Vector3 closest = GetClosestPointOnLine(mesh.Start.position, mesh.End.position, transform.position);
-                if (Vector3.Distance(closest, transform.position) < m_blastRange)
+                Vector3 closest = GetClosestPointOnLine(mesh.From.Position, mesh.To.Position, transform.position);
+                float distance = Vector3.Distance(closest, transform.position);
+                if (distance < m_blastRange && (closestMesh == null || closestDistance > distance))
                 {
-                    mesh.SetDestroy(true);
+                    closestMesh = mesh;
+                    closestDistance = distance;
                 }
+            }
+            if (closestMesh != null)
+            {
+                closestMesh.DestroyConnection();
             }
         }
 

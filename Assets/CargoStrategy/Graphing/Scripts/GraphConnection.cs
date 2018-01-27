@@ -14,7 +14,10 @@ namespace CargoStrategy.Graphing
         public GraphNode m_to;
         public float m_repairTime;
 
-        public List<Transform> ConnectionPath = new List<Transform>();
+
+        public delegate void OnDestroyedDelegate();
+        public OnDestroyedDelegate OnDestroyed;
+        public OnDestroyedDelegate OnRepaired;
 
         protected List<Units.BaseUnit> UnitsOnThisPath = new List<Units.BaseUnit>();
 
@@ -23,11 +26,6 @@ namespace CargoStrategy.Graphing
             get
             {
                 return m_destroyed;
-            }
-
-            set
-            {
-                m_destroyed = value;
             }
         }
 
@@ -65,7 +63,7 @@ namespace CargoStrategy.Graphing
             if (!IsDestroyed)
             {
                 // set the tile to destroyed.
-                IsDestroyed = true;
+                m_destroyed = true;
 
                 // disconnect the tile from the graph network.
                 Disconnect();
@@ -81,6 +79,10 @@ namespace CargoStrategy.Graphing
                 // send out an event to make units update thier paths if required.
                 Units.UnitManager.Instance.CheckForPathRecalculationAfterDestruction(this);
 
+                if (OnDestroyed != null)
+                {
+                    OnDestroyed();
+                }
                 // begin countdown for repair.
                 StartCoroutine(RepairTimer());
             }
@@ -92,10 +94,8 @@ namespace CargoStrategy.Graphing
 
             List<Vector3> resultList = new List<Vector3>();
 
-            for(int i = 0; i < ConnectionPath.Count; ++i)
-            {
-                resultList.Add(ConnectionPath[i].position);
-            }
+            resultList.Add(From.Position);
+            resultList.Add(To.Position);
 
             return resultList;
         }
@@ -137,6 +137,10 @@ namespace CargoStrategy.Graphing
 
             Reconnect();
 
+            if (OnRepaired != null)
+            {
+                OnRepaired();
+            }
             // send out an event to make units update thier paths if required?
         }
 
