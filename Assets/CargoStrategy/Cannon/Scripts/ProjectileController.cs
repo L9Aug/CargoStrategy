@@ -6,10 +6,11 @@ namespace CargoStrategy.Cannon
 {
     public class ProjectileController : MonoBehaviour
     {
-        private const float ShotLifespan = 4;
+        private const float ShotLifespan = 10;
 
         public GameObject CameraFocus;
         public GameObject CameraTarget;
+        public GameObject myModel;
 
         float timeFired;
 
@@ -19,20 +20,39 @@ namespace CargoStrategy.Cannon
             timeFired = Time.time;
             GetComponent<Rigidbody>().AddForce(Power * barrel.forward, ForceMode.Impulse);
             transform.forward = barrel.forward;
+
         }
+
+        float TimeDestroyed;
+        bool Collided = false;
+
+        public event System.Action ProjectileDeletedEvent;
 
         public void Update()
         {
-            if (Time.time - timeFired > ShotLifespan)
+            if ((Time.time - timeFired > ShotLifespan) || Collided)
             {
-                Debug.Log("Destroy this");
-                Destroy(gameObject);
+                TimeDestroyed = Time.time - timeFired;
+                Destroy(myModel);
+                Destroy(GetComponent<Rigidbody>());
+                StartCoroutine(DeleteGO());
             }
+
+        }
+
+
+        IEnumerator DeleteGO()
+        {
+            yield return new WaitForSeconds(Camera.CameraController.cameraChangeDelay);
+            Destroy(gameObject);
+
+            System.Action temp = ProjectileDeletedEvent;
+            if (temp != null) { ProjectileDeletedEvent(); }
         }
 
         public void OnCollisionEnter(Collision collision)
         {
-            Destroy(gameObject);
+            Collided = true;
         }
 
 
