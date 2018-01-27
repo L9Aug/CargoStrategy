@@ -277,6 +277,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_team: 0
+  MovementSpeed: 1
+  TurnSpeed: 90
 --- !u!135 &135028180616724272
 SphereCollider:
   m_ObjectHideFlags: 1

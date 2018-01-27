@@ -10,6 +10,7 @@ namespace CargoStrategy.Graphing
 
         protected List<IGraphNode> openList = new List<IGraphNode>();
         protected List<IGraphNode> closedList = new List<IGraphNode>();
+        protected List<IGraphNode> path = new List<IGraphNode>();
 
         protected IGraphNode startNode;
         protected IGraphNode targetNode;
@@ -22,8 +23,10 @@ namespace CargoStrategy.Graphing
 
             openList.Clear();
             closedList.Clear();
+            path.Clear();
 
             start.CostSoFar = 0;
+            start.Root = null;
 
             openList.Add(start);
 
@@ -41,10 +44,19 @@ namespace CargoStrategy.Graphing
             }
 
             if (targetReached)
-            {
-                closedList.Reverse();
+            {                
+                IGraphNode current = targetNode;
+                
+                while(current.Root != null)
+                {
+                    path.Add(current);
+                    current = current.Root;
+                }
 
-                return closedList;
+                path.Add(current);
+                path.Reverse();
+
+                return path;
             }
             else
             {
@@ -85,6 +97,7 @@ namespace CargoStrategy.Graphing
                             con.CostSoFar = node.CostSoFar + con.GetDistanceTo(node);
                             con.Heuristic = con.GetDistanceTo(targetNode);
                             con.EstimatedTotalCost = con.CostSoFar + con.Heuristic;
+                            con.Root = node;
                             closedList.Remove(con);
                             openList.Add(con);
                         }
@@ -94,6 +107,7 @@ namespace CargoStrategy.Graphing
                         con.CostSoFar = node.CostSoFar + con.GetDistanceTo(node);
                         con.Heuristic = con.GetDistanceTo(targetNode);
                         con.EstimatedTotalCost = con.CostSoFar + con.Heuristic;
+                        con.Root = node;
                         openList.Add(con);
                     }
                 }
@@ -104,7 +118,7 @@ namespace CargoStrategy.Graphing
         protected void CloseNode(IGraphNode node)
         {
             openList.Remove(node);
-            closedList.Remove(node);
+            closedList.Add(node);
         }
 
     }

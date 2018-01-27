@@ -135,6 +135,7 @@ namespace CargoStrategy.Graphing
                 timer += Time.deltaTime;
             }
 
+            IsDestroyed = false;
             Reconnect();
 
             // send out an event to make units update thier paths if required?
