@@ -6,10 +6,11 @@ namespace CargoStrategy.Cannon
 {
     public class ProjectileController : MonoBehaviour
     {
-        private const float ShotLifespan = 4;
+        private const float ShotLifespan = 2;
 
         public GameObject CameraFocus;
         public GameObject CameraTarget;
+        public GameObject myModel;
 
         float timeFired;
 
@@ -25,7 +26,12 @@ namespace CargoStrategy.Cannon
         {
             if (Time.time - timeFired > ShotLifespan)
             {
-                Debug.Log("Destroy this");
+                Debug.Log("Destroy model");
+                Destroy(myModel);
+            }
+            if (Time.time - timeFired > ShotLifespan + CargoStrategy.Camera.CameraController.cameraChangeDelay*  1.1f)
+            {
+                Debug.Log("Destroy GO");
                 Destroy(gameObject);
             }
         }
