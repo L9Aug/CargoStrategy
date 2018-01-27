@@ -15,6 +15,8 @@ namespace CargoStrategy.Cannon
         public GameObject CameraFocus;
         public GameObject ProjectileSpawnPoint;
 
+        public List<ParticleSystem> FireParticleEffects = new List<ParticleSystem> ();
+
         [HideInInspector]
         public ProjectileController myProjectile;
 
@@ -81,6 +83,11 @@ namespace CargoStrategy.Cannon
         {
             myProjectile = Instantiate(ProjectilePrefab, ProjectileSpawnPoint.transform.position, Quaternion.identity ).GetComponent<ProjectileController>();
             myProjectile.Fire(cannonShotPower, cannonGun.transform);
+            foreach (ParticleSystem p in FireParticleEffects)
+            {
+                p.Stop();
+                p.Play();
+            }
         }
 
 
