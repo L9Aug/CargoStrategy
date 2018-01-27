@@ -60,9 +60,7 @@ namespace CargoStrategy.Camera
         bool FiredWaitTime = false;
 
 
-        float LandedTime;
-        bool LandedWaitTime = false;
-
+        bool CurrentParentProjRemoved = false;
 
 
         private void SetupStateMachine()
@@ -72,12 +70,12 @@ namespace CargoStrategy.Camera
             BoolCondition ShotFiredAndWait = new BoolCondition(delegate () { return FiredWaitTime; });
             BoolCondition ShotLanded = new BoolCondition(delegate () { return myCannon.myProjectile.myModel == null; });
             BoolCondition ShotLanded2 = new BoolCondition(delegate () { return myCannon.myProjectile.myModel == null; });
-            BoolCondition ShotLandedAndWait = new BoolCondition(delegate () { return LandedWaitTime; });
+            BoolCondition ShotLandedAndWait = new BoolCondition(delegate () { return CurrentParentProjRemoved; });
             BoolCondition OpenMapViewMode = new BoolCondition(delegate () { return false; });
             NotCondition CloseMapViewMode = new NotCondition(OpenMapViewMode);
 
             //Transitions
-            Transition ShotFiredTrans = new Transition("Shot fired", ShotFired, new List<Action>() { });
+            Transition ShotFiredTrans = new Transition("Shot fired", ShotFired, new List<Action>() { delegate () { myCannon.myProjectile.ProjectileDeletedEvent += delegate () { CurrentParentProjRemoved = true;}; }  });
             Transition ShotFiredAndWaitTrans = new Transition("Shot fired and wait", ShotFiredAndWait, new List<Action>() { });
             Transition ShotLandedTrans = new Transition("Shot landed", ShotLanded, new List<Action>() {});
             Transition ShotLanded2Trans = new Transition("Shot landed2", ShotLanded2, new List<Action>() { });
@@ -100,9 +98,9 @@ namespace CargoStrategy.Camera
 
             State ProjectileWatchMode = new State("ProjetileWatchMode",
                 new List<Transition>() { ShotLandedAndWaitTrans },
-                new List<Action>() { delegate () { LandedTime = Time.time; } },
-                new List<Action>() { FollowProjectile, delegate() { LandedWaitTime = (Time.time - LandedTime) > cameraChangeDelay ? true : false; } },
-                new List<Action>() { delegate() { LandedTime = 0; LandedWaitTime = false; } });
+                new List<Action>() {  },
+                new List<Action>() { FollowProjectile},
+                new List<Action>() { });
 
             State ProjectileFollowMode = new State("Projectile follow mode",
                 new List<Transition>() { ShotLanded2Trans },
