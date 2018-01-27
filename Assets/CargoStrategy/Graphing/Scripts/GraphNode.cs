@@ -14,7 +14,7 @@ namespace CargoStrategy.Graphing
         protected float m_heuristic;
         protected IGraphNode m_root;
         public Units.TeamIds m_team;
-        protected int m_supplierCount;
+        protected int[] m_supplierCount = new int[2];
 
         public List<GraphConnection> Connections = new List<GraphConnection>();
         public List<GraphNode> NodeConnections = new List<GraphNode>();
@@ -86,7 +86,7 @@ namespace CargoStrategy.Graphing
             }
         }
 
-        public int SupplierCount
+        public int[] SupplierCount
         {
             get
             {

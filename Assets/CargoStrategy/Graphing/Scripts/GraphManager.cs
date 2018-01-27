@@ -9,16 +9,16 @@ namespace CargoStrategy.Graphing
     {
         public List<GraphNode> NodeNetwork = new List<GraphNode>();
 
-        IGraphCalculator m_graphCalculator;
-
         public GraphManager()
         {
-            m_graphCalculator = new GraphCalculator();
+            
         }
 
         public List<IGraphNode> CalculateRoute(IGraphNode start, IGraphNode end, Units.TeamIds team)
         {
-            return m_graphCalculator.Run(start, end, team);
+            IGraphCalculator graphingCalc = new GraphCalculator();
+
+            return graphingCalc.Run(start, end, team);
         }
 
     }

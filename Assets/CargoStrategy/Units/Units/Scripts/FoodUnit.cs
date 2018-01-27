@@ -16,18 +16,19 @@ namespace CargoStrategy.Units
 
             if (resultList == null || resultList.Count == 0) return null;
 
-            resultList.Sort((a, b) => { return a.SupplierCount < b.SupplierCount ? -1 : 1; });
-
-            //Debug.Log(resultList[0].SupplierCount + " " + resultList[resultList.Count - 1].SupplierCount + " list size: " + resultList.Count);
+            resultList.Sort((a, b) => { return a.SupplierCount[((int)m_team) - 1] < b.SupplierCount[((int)m_team) - 1] ? -1 : 1; });
 
             return resultList;
         }
 
         protected override void ArrivedAtTarget()
         {
-            --m_targetNode.SupplierCount;
+            --m_targetNode.SupplierCount[((int)m_team) - 1];
 
-            ((BaseBuilding)m_targetNode).StockArrived();
+            if (((BaseBuilding)m_targetNode).ProductionInput.GetType() == this.GetType())
+            {
+                ((BaseBuilding)m_targetNode).StockArrived();
+            }
 
             base.ArrivedAtTarget();
         }

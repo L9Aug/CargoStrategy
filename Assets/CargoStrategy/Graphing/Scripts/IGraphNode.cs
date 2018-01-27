@@ -42,7 +42,7 @@ namespace CargoStrategy.Graphing
             get;
         }
 
-        int SupplierCount
+        int[] SupplierCount
         {
             get;
             set;

@@ -124,8 +124,7 @@ MonoBehaviour:
   m_team: 0
   Connections: []
   NodeConnections: []
-  ProductionOutput: {fileID: 114711829613904610, guid: 1fef85ea919da594e898d88eeba2b282,
-    type: 2}
+  ProductionOutput: {fileID: 0}
   OptimalOutputPerSecond: 1
   ProductionInput: {fileID: 0}
   InputTarget: 0

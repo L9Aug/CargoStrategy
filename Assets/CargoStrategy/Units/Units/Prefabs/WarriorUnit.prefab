@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4940079914816034}
   - component: {fileID: 33653633235591908}
-  - component: {fileID: 136856672488500358}
   - component: {fileID: 23379354116808764}
   m_Layer: 0
   m_Name: Capsule
@@ -38,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4735085994096008}
   - component: {fileID: 33360121008736692}
-  - component: {fileID: 65431532972832686}
   - component: {fileID: 23637806475840348}
   m_Layer: 0
   m_Name: Cube
@@ -56,7 +54,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4524929609364282}
   - component: {fileID: 33313700764765886}
-  - component: {fileID: 135028180616724272}
   - component: {fileID: 23797575388137146}
   m_Layer: 0
   m_Name: Sphere
@@ -253,18 +250,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1336569608161286}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65431532972832686
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1538343916094506}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114642632444963738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -279,28 +264,3 @@ MonoBehaviour:
   m_team: 0
   MovementSpeed: 1
   TurnSpeed: 90
---- !u!135 &135028180616724272
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1552445370565690}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &136856672488500358
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1336569608161286}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}

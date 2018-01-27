@@ -36,7 +36,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4046596307392814}
   - component: {fileID: 33729521641678318}
-  - component: {fileID: 136681780741212228}
   - component: {fileID: 23399939461761268}
   m_Layer: 0
   m_Name: Capsule
@@ -54,7 +53,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4050358078649278}
   - component: {fileID: 33191851757716182}
-  - component: {fileID: 65250104528122078}
   - component: {fileID: 23630752552654200}
   m_Layer: 0
   m_Name: Cube
@@ -182,18 +180,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1561407571631980}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65250104528122078
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1932332382391598}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114711829613904610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,18 +192,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_team: 0
-  MovementSpeed: 1
-  TurnSpeed: 90
---- !u!136 &136681780741212228
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1561407571631980}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  MovementSpeed: 10
+  TurnSpeed: 180

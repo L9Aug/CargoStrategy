@@ -26,8 +26,6 @@ namespace CargoStrategy.Units
         protected const float angleThreshold = 0.1f;
         protected const float arrivalThreshold = 0.1f;
 
-        List<GraphNode> m_nodeTargets;
-
         protected StateMachine MotionMachine;
 
         protected Vector3? motionTarget;
@@ -46,11 +44,6 @@ namespace CargoStrategy.Units
             m_currentFrom = startingNode;
             GetNewPath();
             SetupMovementMachine();
-        }
-
-        private void OnDestroy()
-        {
-            UnitManager.Instance.UnRegisterUnit(this);
         }
 
         protected abstract List<GraphNode> GetNodeTargets();
@@ -75,12 +68,12 @@ namespace CargoStrategy.Units
         {
             if(m_targetNode != null)
             {
-                --m_targetNode.SupplierCount;
+                --m_targetNode.SupplierCount[((int)m_team) - 1];
             }
 
             motionTarget = null;
 
-            m_nodeTargets = GetNodeTargets();
+            List<GraphNode> m_nodeTargets = GetNodeTargets();
 
             if(m_nodeTargets == null)
             {
@@ -95,7 +88,7 @@ namespace CargoStrategy.Units
                 if(Path != null)
                 {
                     m_targetNode = m_nodeTargets[i];
-                    ++m_targetNode.SupplierCount;
+                    ++m_targetNode.SupplierCount[((int)m_team) - 1];
                     m_pathProgress = 0;
                     break;
                 }

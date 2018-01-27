@@ -54,6 +54,7 @@ namespace CargoStrategy.Graphing
                 {
                     path.Add(current);
                     current = current.Root;
+                    path[path.Count - 1].Root = null;
                 }
 
                 path.Add(current);
