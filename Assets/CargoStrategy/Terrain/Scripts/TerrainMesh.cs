@@ -24,6 +24,9 @@ namespace CargoStrategy.Terrain
         [SerializeField]
         private float m_heightScale = 1.0f;
 
+        [SerializeField]
+        private float m_roadWidth = 7.5f;
+
         private Mesh m_mesh = null;
 
         public void BuildMesh()
@@ -37,11 +40,14 @@ namespace CargoStrategy.Terrain
                 int width = m_heightMap.width;
                 int height = m_heightMap.height;
                 List<Vector3> verticies = new List<Vector3>();
+                List<Vector2> uv = new List<Vector2>();
+
                 for (int x = 0; x < width; x++)
                 {
                     for (int y = 0; y < height; y++)
                     {
                         verticies.Add(new Vector3(x, m_heightMap.GetPixel(x,y).grayscale * m_heightScale, y));
+                        uv.Add(new Vector2(((float)x) / width, ((float)y) / height));
                     }
                 }
                 List<int> indicies = new List<int>();
@@ -61,9 +67,10 @@ namespace CargoStrategy.Terrain
                 RoadMesh[] roads = FindObjectsOfType<RoadMesh>();
                 for (int i = 0; i < roads.Length; i++)
                 {
-                    FlattenLine(verticies, roads[i].Start.position, roads[i].End.position, 5.0f);
+                    FlattenLine(verticies, roads[i].Start.position, roads[i].End.position, m_roadWidth);
                 }
                 m_mesh.SetVertices(verticies);
+                m_mesh.SetUVs(0, uv);
                 m_mesh.SetIndices(indicies.ToArray(), MeshTopology.Triangles, 0);
                 m_mesh.RecalculateNormals();
             }
