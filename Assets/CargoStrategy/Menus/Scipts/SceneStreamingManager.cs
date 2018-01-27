@@ -32,6 +32,7 @@ namespace CargoStrategy.Menus
             {
                 AsyncOperation operation = SceneManager.LoadSceneAsync(scenes[i], LoadSceneMode.Additive);
                 operation.allowSceneActivation = false;
+                m_sceneOperations.Add(operation);
             }
         }
 
@@ -40,6 +41,7 @@ namespace CargoStrategy.Menus
             m_loadingScenes = true;
             AsyncOperation operation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
             operation.allowSceneActivation = false;
+            m_sceneOperations.Add(operation);
         }
 
         public void UnloadScenes(List<string> scenes)
@@ -52,7 +54,7 @@ namespace CargoStrategy.Menus
 
         public void UnloadScene(string scene)
         {
-            AsyncOperation operation = SceneManager.UnloadSceneAsync(scene);
+            SceneManager.UnloadSceneAsync(scene);
         }
 
 
