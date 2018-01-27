@@ -25,6 +25,11 @@ namespace CargoStrategy.Graphing
             get;
             set;
         }
+
+        Vector3 Position
+        {
+            get;
+        }
         
         List<IGraphNode> GetNodeConnections();
 

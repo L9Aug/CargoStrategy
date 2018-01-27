@@ -8,7 +8,7 @@ namespace CargoStrategy.Graphing
     public interface IGraphManager
     {
 
-        IGraphRoute CalculateRoute(IGraphNode start, IGraphNode end, int team);
+        List<IGraphNode> CalculateRoute(IGraphNode start, IGraphNode end, int team);
 
     }
 

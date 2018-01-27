@@ -14,7 +14,7 @@ namespace CargoStrategy.Graphing
             m_graphCalculator = new GraphCalculator();
         }
 
-        public IGraphRoute CalculateRoute(IGraphNode start, IGraphNode end, int team)
+        public List<IGraphNode> CalculateRoute(IGraphNode start, IGraphNode end, int team)
         {
             return m_graphCalculator.Run(start, end, team);
         }
