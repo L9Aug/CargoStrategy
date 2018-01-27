@@ -223,7 +223,7 @@ InputManager:
     altPositiveButton: right ctrl
     gravity: 3
     dead: 0
-    sensitivity: 3
+    sensitivity: 100
     snap: 0
     invert: 0
     type: 0

@@ -8,6 +8,12 @@ namespace CargoStrategy.UserInput
 
     public class UserInputDispatcher : Singleton<UserInputDispatcher>
     {
+        public enum PlayerList
+        {
+            Player1,
+            Player2
+        }
+
         public event System.Action Player1FiringEvent;
         public event System.Action Player2FiringEvent;
 
@@ -38,44 +44,77 @@ namespace CargoStrategy.UserInput
             }
         }
 
-        public float GetPlayer1HorizontalMovement()
+        public float GetPlayerHorizontalMovement(PlayerList player)
         {
-            return Input.GetAxis("P1Horizontal");
-        }
-        public float GetPlayer1VerticalMovement()
-        {
-            return Input.GetAxis("P2Vertical");
+            float a;
+            float b;
+            switch (player)
+            {
+                case PlayerList.Player1:
+                    a = Input.GetAxis("P1Horizontal");
+                    b = Input.GetAxis("P1HorizontalKeyboard");
+                    break;
+                case PlayerList.Player2:
+                    a = Input.GetAxis("P2Horizontal");
+                    b = Input.GetAxis("P2HorizontalKeyboard");
+                    break;
+                default:
+                    a = 0;
+                    b = 0;
+                    break;
+            }
+
+            return Mathf.Abs(a) > Mathf.Abs(b) ? a : b;
         }
 
-        public float GetPlayer1HorizontalLook()
+        public float GetPlayerVerticalMovement(PlayerList player)
         {
-            return Input.GetAxis("P1LookHorizontal");
-        }
-        public float GetPlayer1VerticalLook()
-        {
-            return Input.GetAxis("P1LookVertical");
-        }
-
-        public float GetPlayer2HorizontalMovement()
-        {
-            return Input.GetAxis("P2Horizontal");
-        }
-        public float GetPlayer2VerticalMovement()
-        {
-            return Input.GetAxis("P2Vertical");
-        }
-
-        public float GetPlayer2HorizontalLook()
-        {
-            return Input.GetAxis("P2LookHorizontal");
-        }
-        public float GetPlayer2VerticalLook()
-        {
-            return Input.GetAxis("P2LookVertical");
+            float a;
+            float b;
+            switch (player)
+            {
+                case PlayerList.Player1:
+                    a = Input.GetAxis("P1Vertical");
+                    b = Input.GetAxis("P1VerticalKeyboard");
+                    break;
+                case PlayerList.Player2:
+                    a = Input.GetAxis("P2Vertical");
+                    b = Input.GetAxis("P2VerticalKeyboard");
+                    break;
+                default:
+                    a = 0;
+                    b = 0;
+                    break;
+            }
+            return Mathf.Abs(a) > Mathf.Abs(b) ? a : b;
         }
 
+        
+        public float GetPlayerHorizontalLook(PlayerList player)
+        {
+            switch (player)
+            {
+                case PlayerList.Player1:
+                    return Input.GetAxis("P1LookHorizontal");
+                case PlayerList.Player2:
+                    return Input.GetAxis("P2LookHorizontal");
+                default:
+                    return -0;
+            }
+        }
 
-
+        public float GetPlayerVerticalLook(PlayerList player)
+        {
+            switch (player)
+            {
+                case PlayerList.Player1:
+                    return Input.GetAxis("P1LookVertical");
+                case PlayerList.Player2:
+                    return Input.GetAxis("P2LookVertical");
+                default:
+                    return -0;
+            }
+        }
 
 
 
