@@ -28,7 +28,7 @@ namespace CargoStrategy.Cannon
         private const float cannonMaxPitch = 10f;
         private const float cannonMinPitch = 300f;
 
-        private const float cannonShotPower = 300;
+        private const float cannonShotPower = 100;
         #endregion
 
 
@@ -40,8 +40,11 @@ namespace CargoStrategy.Cannon
 
         private void Update()
         {
-            SetCannonYaw(UserInputDispatcher.Instance.GetPlayerHorizontalMovement(myPlayer));
-            SetCannonPitch(UserInputDispatcher.Instance.GetPlayerVerticalMovement(myPlayer));
+            if (myProjectile == null)
+            {
+                SetCannonYaw(UserInputDispatcher.Instance.GetPlayerHorizontalMovement(myPlayer));
+                SetCannonPitch(UserInputDispatcher.Instance.GetPlayerVerticalMovement(myPlayer));
+            }
         }
 
 
