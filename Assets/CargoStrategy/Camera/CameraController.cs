@@ -9,6 +9,9 @@ namespace CargoStrategy.Camera
 {
     public class CameraController : MonoBehaviour
     {
+        private const float lookMax = 3;
+        public const float cameraChangeDelay = 0.6f;
+
         StateMachine CameraMachine;
 
         public CannonController myCannon;
@@ -25,14 +28,27 @@ namespace CargoStrategy.Camera
 
         public void FollowCannon()
         {
+
             transform.position = myCannon.CameraTarget.transform.position;
-            transform.localRotation = Quaternion.LookRotation(myCannon.CameraFocus.transform.position - myCannon.CameraTarget.transform.position);
+
+            Vector3 lookOffset = myCannon.transform.right * UserInput.UserInputDispatcher.Instance.GetPlayerHorizontalLook(myCannon.myPlayer) * lookMax +
+                         myCannon.transform.up * UserInput.UserInputDispatcher.Instance.GetPlayerVerticalLook(myCannon.myPlayer) * lookMax;
+
+
+            transform.localRotation = Quaternion.LookRotation((myCannon.CameraFocus.transform.position + lookOffset) - myCannon.CameraTarget.transform.position);
         }
+
 
         public void FollowProjectile()
         {
+
             transform.position = myCannon.myProjectile.CameraTarget.transform.position;
-            transform.localRotation = Quaternion.LookRotation(myCannon.myProjectile.CameraFocus.transform.position - myCannon.myProjectile.CameraTarget.transform.position);
+
+            Vector3 lookOffset = myCannon.myProjectile.transform.right * UserInput.UserInputDispatcher.Instance.GetPlayerHorizontalLook(myCannon.myPlayer) * lookMax +
+                                   myCannon.myProjectile.transform.up * UserInput.UserInputDispatcher.Instance.GetPlayerVerticalLook(myCannon.myPlayer) * lookMax;
+
+            transform.localRotation = Quaternion.LookRotation((myCannon.myProjectile.CameraFocus.transform.position + lookOffset) - myCannon.myProjectile.CameraTarget.transform.position);
+
         }
 
         public void MapView()
@@ -40,23 +56,32 @@ namespace CargoStrategy.Camera
 
         }
 
+        float FiredTime;
+        bool FiredWaitTime = false;
+
+
+        bool CurrentParentProjRemoved = false;
 
 
         private void SetupStateMachine()
         {
             //Conditions
             BoolCondition ShotFired = new BoolCondition(delegate() { return myCannon.myProjectile != null; } );
-            BoolCondition ShotLanded = new BoolCondition(delegate () { return myCannon.myProjectile == null; });
+            BoolCondition ShotFiredAndWait = new BoolCondition(delegate () { return FiredWaitTime; });
+            BoolCondition ShotLanded = new BoolCondition(delegate () { return myCannon.myProjectile.myModel == null; });
+            BoolCondition ShotLanded2 = new BoolCondition(delegate () { return myCannon.myProjectile.myModel == null; });
+            BoolCondition ShotLandedAndWait = new BoolCondition(delegate () { return CurrentParentProjRemoved; });
             BoolCondition OpenMapViewMode = new BoolCondition(delegate () { return false; });
             NotCondition CloseMapViewMode = new NotCondition(OpenMapViewMode);
-            AndCondition CloseMapViewModeToProjectileFollow = new AndCondition(CloseMapViewMode, ShotLanded); 
 
             //Transitions
-            Transition ShotFiredTrans = new Transition("Shot fired", ShotFired, new List<Action>() { });
-            Transition ShotLandedTrans = new Transition("Shot landed", ShotLanded, new List<Action>() { });
+            Transition ShotFiredTrans = new Transition("Shot fired", ShotFired, new List<Action>() { delegate () { myCannon.myProjectile.ProjectileDeletedEvent += delegate () { CurrentParentProjRemoved = true;}; }  });
+            Transition ShotFiredAndWaitTrans = new Transition("Shot fired and wait", ShotFiredAndWait, new List<Action>() { });
+            Transition ShotLandedTrans = new Transition("Shot landed", ShotLanded, new List<Action>() {});
+            Transition ShotLanded2Trans = new Transition("Shot landed2", ShotLanded2, new List<Action>() { });
+            Transition ShotLandedAndWaitTrans = new Transition("Shot landed and wait", ShotLandedAndWait, new List<Action>() { });
             Transition OpenMapViewModeTrans = new Transition("Map view", OpenMapViewMode, new List<Action>() { });
             Transition CloseMapViewModeTrans = new Transition("Close map view", CloseMapViewMode, new List<Action>() { });
-            Transition CloseMapViewModeToProjectileFollowTrans = new Transition("Close map to proj follow", CloseMapViewModeToProjectileFollow, new List<Action>() { });
 
             //States
             State CanonFollowMode = new State("Cannon follow mode",
@@ -65,27 +90,42 @@ namespace CargoStrategy.Camera
                 new List<Action>() { FollowCannon },
                 new List<Action>() { });
 
+            State CannonWatchMode = new State("CannonWatchMode",
+                new List<Transition>() { ShotLandedTrans, ShotFiredAndWaitTrans },
+                new List<Action>() { delegate() { FiredTime = Time.time; } },
+                new List<Action>() { FollowCannon, delegate() { FiredWaitTime = (Time.time - FiredTime) > cameraChangeDelay ? true : false; } },
+                new List<Action>() { delegate () { FiredTime = 0; FiredWaitTime = false; } });
+
+            State ProjectileWatchMode = new State("ProjetileWatchMode",
+                new List<Transition>() { ShotLandedAndWaitTrans },
+                new List<Action>() {  },
+                new List<Action>() { FollowProjectile},
+                new List<Action>() { });
+
             State ProjectileFollowMode = new State("Projectile follow mode",
-                new List<Transition>() { ShotLandedTrans, OpenMapViewModeTrans },
+                new List<Transition>() { ShotLanded2Trans },
                 new List<Action>() { },
                 new List<Action>() { FollowProjectile },
                 new List<Action>() { });
 
             State MapViewMode = new State("Cannon follow mode",
-                new List<Transition>() { CloseMapViewModeToProjectileFollowTrans, CloseMapViewModeTrans },
+                new List<Transition>() { CloseMapViewModeTrans },
                 new List<Action>() { },
                 new List<Action>() { MapView },
                 new List<Action>() { });
 
             //Targets
-            ShotFiredTrans.SetTargetState(ProjectileFollowMode);
+            ShotFiredTrans.SetTargetState(CannonWatchMode);
             ShotLandedTrans.SetTargetState(CanonFollowMode);
+            ShotLanded2Trans.SetTargetState(ProjectileWatchMode);
             OpenMapViewModeTrans.SetTargetState(MapViewMode);
             CloseMapViewModeTrans.SetTargetState(CanonFollowMode);
-            CloseMapViewModeToProjectileFollowTrans.SetTargetState(ProjectileFollowMode);
+            ShotFiredAndWaitTrans.SetTargetState(ProjectileFollowMode);
+            ShotLandedAndWaitTrans.SetTargetState(CanonFollowMode);
+
 
             //Setup Machine
-            CameraMachine = new StateMachine(CanonFollowMode, CanonFollowMode, ProjectileFollowMode, MapViewMode);
+            CameraMachine = new StateMachine(CanonFollowMode, CanonFollowMode, ProjectileFollowMode, MapViewMode, CannonWatchMode, ProjectileFollowMode);
             CameraMachine.InitMachine();
         }
         
