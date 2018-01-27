@@ -188,7 +188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &908954728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,6 +532,7 @@ MonoBehaviour:
   m_meshRenderer: {fileID: 1613613188}
   m_collisionMesh: {fileID: 1613613189}
   m_heightScale: 10
+  m_roadWidth: 7.5
 --- !u!4 &1613613191
 Transform:
   m_ObjectHideFlags: 0
