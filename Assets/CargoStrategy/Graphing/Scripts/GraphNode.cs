@@ -13,7 +13,7 @@ namespace CargoStrategy.Graphing
         protected float m_estimatedTotalCost;
         protected float m_heuristic;
         protected IGraphNode m_root;
-        public int m_team;
+        public Units.TeamIds m_team;
         protected int m_supplierCount;
 
         public List<GraphConnection> Connections = new List<GraphConnection>();
@@ -78,7 +78,7 @@ namespace CargoStrategy.Graphing
             }
         }
 
-        public int Team
+        public Units.TeamIds Team
         {
             get
             {

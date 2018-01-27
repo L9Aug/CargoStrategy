@@ -22,6 +22,16 @@ namespace CargoStrategy.Units
 
             return resultList;
         }
+
+        protected override void ArrivedAtTarget()
+        {
+            --m_targetNode.SupplierCount;
+
+            ((BaseBuilding)m_targetNode).StockArrived();
+
+            base.ArrivedAtTarget();
+        }
+
     }
 
 }

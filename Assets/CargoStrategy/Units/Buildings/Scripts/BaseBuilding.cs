@@ -6,6 +6,8 @@ using CargoStrategy.Graphing;
 namespace CargoStrategy.Units
 {
 
+    public enum TeamIds { Neutral = 0, Player1 = 1, Player2 = 2 }
+
     public abstract class BaseBuilding : GraphNode 
     {
         // The Unit that this building creates.
@@ -27,7 +29,7 @@ namespace CargoStrategy.Units
 
         private void Update()
         {
-            if (ProductionOutput != null)
+            if (ProductionOutput != null || m_team != TeamIds.Neutral)
             {
                 // increase production progress.
                 m_productionProgress += OptimalOutputPerSecond * Time.deltaTime * GetProductionModifierFromStorage();
@@ -42,7 +44,7 @@ namespace CargoStrategy.Units
 
         protected virtual float GetProductionModifierFromStorage()
         {
-            return ((float)storedSupply / (float)InputTarget);
+            return Mathf.Clamp01(((float)storedSupply / (float)InputTarget));
         }
 
         protected void CreateUnit()
@@ -51,12 +53,23 @@ namespace CargoStrategy.Units
             BaseUnit nUnit = Instantiate(ProductionOutput);
 
             nUnit.transform.position = transform.position;
+            nUnit.transform.rotation = transform.rotation;
 
             // register the unit to the manager.
             UnitManager.Instance.RegisterNewUnit(nUnit);
 
             // initalise the unit.
             nUnit.Initialise(this, m_team);
+        }
+
+        public void StockArrived()
+        {
+            ++storedSupply;
+        }
+
+        public void Convert(TeamIds nTeam)
+        {
+            m_team = nTeam;
         }
 
     }

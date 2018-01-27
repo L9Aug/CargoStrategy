@@ -10,7 +10,7 @@ namespace CargoStrategy.Units
 
     public abstract class BaseUnit : MonoBehaviour
     {
-        public int m_team;
+        public TeamIds m_team;
         public List<IGraphNode> Path;
 
         [Tooltip("Movement speed, units/second.")]
@@ -40,7 +40,7 @@ namespace CargoStrategy.Units
         protected int m_connectionProgress;
         protected int m_connectionDirection;
 
-        public void Initialise(IGraphNode startingNode, int team)
+        public void Initialise(IGraphNode startingNode, TeamIds team)
         {
             m_team = team;
             m_currentFrom = startingNode;
@@ -108,7 +108,7 @@ namespace CargoStrategy.Units
             MotionMachine.SMUpdate();
         }
 
-        protected void ArrivedAtTarget()
+        protected virtual void ArrivedAtTarget()
         {
             Debug.Log("Arrived At Target!");
             this.Kill();
@@ -143,7 +143,8 @@ namespace CargoStrategy.Units
                     // if the current connection is null then we are at the center of a node and will need to update our status.
                     if (m_currentConnection == null)
                     {
-                        ++m_pathProgress;
+                        //m_pathProgress;
+                        Path.RemoveAt(0);
                         if (m_pathProgress >= Path.Count - 1)
                         {
                             motionTarget = m_targetNode.Position;

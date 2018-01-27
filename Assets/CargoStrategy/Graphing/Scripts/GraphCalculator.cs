@@ -12,14 +12,17 @@ namespace CargoStrategy.Graphing
         protected List<IGraphNode> closedList = new List<IGraphNode>();
         protected List<IGraphNode> path = new List<IGraphNode>();
 
+        protected List<IGraphNode> NodeMap;
+
         protected IGraphNode startNode;
         protected IGraphNode targetNode;
-        protected int team;
+        protected Units.TeamIds m_team;
 
-        public List<IGraphNode> Run(IGraphNode start, IGraphNode end, int team)
+        public List<IGraphNode> Run(IGraphNode start, IGraphNode end, Units.TeamIds team)
         {
             startNode = start;
             targetNode = end;
+            m_team = team;
 
             openList.Clear();
             closedList.Clear();
@@ -88,7 +91,7 @@ namespace CargoStrategy.Graphing
 
             foreach(IGraphNode con in connections)
             {
-                if (con.Team == team || con == targetNode)
+                if (con.Team == m_team || con == targetNode)
                 {
                     if (closedList.Contains(con))
                     {

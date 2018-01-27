@@ -8,7 +8,7 @@ namespace CargoStrategy.Graphing
     public interface IGraphCalculator
     {
 
-        List<IGraphNode> Run(IGraphNode start, IGraphNode end, int team);
+        List<IGraphNode> Run(IGraphNode start, IGraphNode end, Units.TeamIds team);
 
     }
 

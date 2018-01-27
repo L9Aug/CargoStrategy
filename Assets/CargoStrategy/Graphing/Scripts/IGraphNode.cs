@@ -37,7 +37,7 @@ namespace CargoStrategy.Graphing
             get;
         }
 
-        int Team
+        Units.TeamIds Team
         {
             get;
         }

@@ -25,6 +25,20 @@ namespace CargoStrategy.Units
             m_unitList.Remove(unit);
         }
 
+        public void BuildingConverted(IGraphNode node)
+        {
+            // if a building that the unit used in it's future path became converted then look for a new strategy.
+            foreach (BaseUnit unit in m_unitList)
+            {
+                int nodeIndex = unit.Path.IndexOf(node);
+
+                if(nodeIndex > 0)
+                {
+                    unit.GetNewPath();
+                }
+            }
+        }
+
         public void CheckForPathRecalculationAfterDestruction(IGraphConnection lostConnection)
         {
             foreach(BaseUnit unit in m_unitList)
@@ -39,7 +53,7 @@ namespace CargoStrategy.Units
                         if (unit.Path[fromIndex - 1] == lostConnection.To)
                         {
                             // re calc path.
-
+                            unit.GetNewPath();
                         }
                     }
 
@@ -48,7 +62,7 @@ namespace CargoStrategy.Units
                         if (unit.Path[fromIndex + 1] == lostConnection.To)
                         {
                             // re calc path.
-
+                            unit.GetNewPath();
                         }
                     }
                 }

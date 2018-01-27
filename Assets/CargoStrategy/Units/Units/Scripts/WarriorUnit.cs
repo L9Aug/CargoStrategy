@@ -24,6 +24,16 @@ namespace CargoStrategy.Units
 
             return resultList;
         }
+
+        protected override void ArrivedAtTarget()
+        {
+            Debug.Log("Warrior Arrived");
+
+            ((BaseBuilding)m_targetNode).Convert(m_team);
+
+            base.ArrivedAtTarget();
+        }
+
     }
 
 }
