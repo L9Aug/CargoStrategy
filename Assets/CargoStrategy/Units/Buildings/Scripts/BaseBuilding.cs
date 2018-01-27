@@ -32,7 +32,10 @@ namespace CargoStrategy.Units
 
         private void OnDestroy()
         {
-            GraphManager.Instance.NodeNetwork.Remove(this);
+            if (GraphManager.HasInstance())
+            {
+                GraphManager.Instance.NodeNetwork.Remove(this);
+            }
         }
 
         private void Update()

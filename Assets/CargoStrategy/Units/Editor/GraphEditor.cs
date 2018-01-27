@@ -19,10 +19,10 @@ public class GraphEditor : EditorWindow
         EditorWindow.GetWindow(typeof(GraphEditor));
     }
 
-    public void OnGUI () {
-
+    public void OnGUI ()
+    {
         GameObject[] objects = Selection.gameObjects;
-        if (objects.Length == 2 && GraphManager.Instance.RoadPrefab != null)
+        if (objects.Length == 2 )
         {
             BaseBuilding b1 = objects[0].GetComponent<BaseBuilding>();
             BaseBuilding b2 = objects[1].GetComponent<BaseBuilding>();
@@ -30,16 +30,22 @@ public class GraphEditor : EditorWindow
             {
                 if (GUILayout.Button("Connect Selected"))
                 {
-                    RoadMesh m_roadPrefab = GraphManager.Instance.RoadPrefab;
-                    Undo.RecordObject(b1, "connect");
-                    b1.AddConnection(b2);
+                    RoadMesh m_roadPrefab = AssetDatabase.LoadAssetAtPath<RoadMesh>("assets/CargoStrategy/Terrain/Prefabs/RoadPrefab.prefab");
+                    RoadMesh mesh = (RoadMesh)PrefabUtility.InstantiatePrefab(m_roadPrefab);
+                    Undo.RecordObject(b1, "connectb1");
 
-                    Undo.RecordObject(b2, "connect");
+                    b1.AddConnection(b2);
+                    Undo.RecordObject(b2, "connectb1");
+
                     b2.AddConnection(b1);
-                    RoadMesh mesh = Instantiate(m_roadPrefab);
-                    Undo.RecordObject(mesh, "connect");
+
                     mesh.m_to = b1;
                     mesh.m_from = b2;
+
+                    b1.Connections.Add(mesh);
+                    b2.Connections.Add(mesh);
+                    EditorUtility.SetDirty(b1);
+                    EditorUtility.SetDirty(b2);
                 }
             }
         }

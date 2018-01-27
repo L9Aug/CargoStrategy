@@ -10,7 +10,10 @@ namespace CargoStrategy.Graphing
     {
         protected bool m_destroyed = false;
         public float m_weight;
+
+        [SerializeField]
         public GraphNode m_from;
+        [SerializeField]
         public GraphNode m_to;
         public float m_repairTime;
 
@@ -135,7 +138,7 @@ namespace CargoStrategy.Graphing
                 timer += Time.deltaTime;
             }
 
-            IsDestroyed = false;
+            m_destroyed = false;
             Reconnect();
 
             if (OnRepaired != null)
