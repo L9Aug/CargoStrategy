@@ -5,9 +5,9 @@ using UnityEngine;
 namespace CargoStrategy.Graphing
 {
 
-    public class GraphManager : IGraphManager
+    public class GraphManager : Generic.Singleton<GraphManager>, IGraphManager
     {
-        public List<IGraphNode> NodeNetwork = new List<IGraphNode>();
+        public List<GraphNode> NodeNetwork = new List<GraphNode>();
 
         IGraphCalculator m_graphCalculator;
 

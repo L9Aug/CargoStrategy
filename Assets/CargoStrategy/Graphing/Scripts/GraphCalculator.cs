@@ -72,7 +72,7 @@ namespace CargoStrategy.Graphing
             // close the current node.
             CloseNode(node);
 
-            List<IGraphNode> connections = node.GetNodeConnections();
+            List<GraphNode> connections = node.GetNodeConnections();
 
             foreach(IGraphNode con in connections)
             {

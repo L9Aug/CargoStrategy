@@ -12,10 +12,11 @@ namespace CargoStrategy.Graphing
         protected float m_costSoFar;
         protected float m_estimatedTotalCost;
         protected float m_heuristic;
-        protected int m_team;
+        public int m_team;
+        protected int m_supplierCount;
 
-        public List<IGraphConnection> Connections = new List<IGraphConnection>();
-        public List<IGraphNode> NodeConnections = new List<IGraphNode>();
+        public List<GraphConnection> Connections = new List<GraphConnection>();
+        public List<GraphNode> NodeConnections = new List<GraphNode>();
 
         public float CostSoFar
         {
@@ -71,6 +72,19 @@ namespace CargoStrategy.Graphing
             }
         }
 
+        public int SupplierCount
+        {
+            get
+            {
+                return m_supplierCount;
+            }
+
+            set
+            {
+                m_supplierCount = value;
+            }
+        }
+
         public IGraphConnection GetAdjacentConnectionTo(IGraphNode to)
         {
             return Connections.Find(x => x.To == to);
@@ -81,9 +95,22 @@ namespace CargoStrategy.Graphing
             return Vector3.Distance(transform.position, node.Position);
         }
 
-        public List<IGraphNode> GetNodeConnections()
+        public List<GraphNode> GetNodeConnections()
         {
             return NodeConnections;
+        }
+
+        public void AddConnection(IGraphNode node)
+        {
+            if (!NodeConnections.Contains((GraphNode)node))
+            {
+                NodeConnections.Add((GraphNode)node);
+            }
+        }
+
+        public void RemoveConnection(IGraphNode node)
+        {
+            NodeConnections.Remove((GraphNode)node);
         }
 
     }

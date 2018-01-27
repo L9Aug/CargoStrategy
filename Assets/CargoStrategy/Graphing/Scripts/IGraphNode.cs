@@ -35,12 +35,23 @@ namespace CargoStrategy.Graphing
         {
             get;
         }
+
+        int SupplierCount
+        {
+            get;
+            set;
+        }
         
-        List<IGraphNode> GetNodeConnections();
+        List<GraphNode> GetNodeConnections();
 
         IGraphConnection GetAdjacentConnectionTo(IGraphNode to);
 
         float GetDistanceTo(IGraphNode node);
+
+        void AddConnection(IGraphNode node);
+
+        void RemoveConnection(IGraphNode node);
+
 
     }
 
