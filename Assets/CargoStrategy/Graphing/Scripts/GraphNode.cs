@@ -12,6 +12,7 @@ namespace CargoStrategy.Graphing
         protected float m_costSoFar;
         protected float m_estimatedTotalCost;
         protected float m_heuristic;
+        protected int m_team;
 
         public List<IGraphConnection> Connections = new List<IGraphConnection>();
         public List<IGraphNode> NodeConnections = new List<IGraphNode>();
@@ -62,6 +63,14 @@ namespace CargoStrategy.Graphing
             }
         }
 
+        public int Team
+        {
+            get
+            {
+                return m_team;
+            }
+        }
+
         public IGraphConnection GetAdjacentConnectionTo(IGraphNode to)
         {
             return Connections.Find(x => x.To == to);
@@ -76,6 +85,7 @@ namespace CargoStrategy.Graphing
         {
             return NodeConnections;
         }
+
     }
 
 }

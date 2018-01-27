@@ -38,12 +38,18 @@ namespace CargoStrategy.Graphing
                 if (current == targetNode) targetReached = true;
 
                 AddConnectionsToOpen(current);
-
             }
 
-            closedList.Reverse();
+            if (targetReached)
+            {
+                closedList.Reverse();
 
-            return closedList;
+                return closedList;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         protected IGraphNode GetLowestEstimatedTotalCost()
@@ -70,23 +76,26 @@ namespace CargoStrategy.Graphing
 
             foreach(IGraphNode con in connections)
             {
-                if (closedList.Contains(con))
+                if (con.Team == team || con == targetNode)
                 {
-                    if(con.EstimatedTotalCost > (node.CostSoFar + con.GetDistanceTo(node)) + (con.GetDistanceTo(targetNode)))
+                    if (closedList.Contains(con))
+                    {
+                        if (con.EstimatedTotalCost > (node.CostSoFar + con.GetDistanceTo(node)) + (con.GetDistanceTo(targetNode)))
+                        {
+                            con.CostSoFar = node.CostSoFar + con.GetDistanceTo(node);
+                            con.Heuristic = con.GetDistanceTo(targetNode);
+                            con.EstimatedTotalCost = con.CostSoFar + con.Heuristic;
+                            closedList.Remove(con);
+                            openList.Add(con);
+                        }
+                    }
+                    else
                     {
                         con.CostSoFar = node.CostSoFar + con.GetDistanceTo(node);
                         con.Heuristic = con.GetDistanceTo(targetNode);
                         con.EstimatedTotalCost = con.CostSoFar + con.Heuristic;
-                        closedList.Remove(con);
                         openList.Add(con);
                     }
-                }
-                else
-                {
-                    con.CostSoFar = node.CostSoFar + con.GetDistanceTo(node);
-                    con.Heuristic = con.GetDistanceTo(targetNode);
-                    con.EstimatedTotalCost = con.CostSoFar + con.Heuristic;
-                    openList.Add(con);
                 }
             }
 

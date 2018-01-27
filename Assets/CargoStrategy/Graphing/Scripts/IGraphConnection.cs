@@ -8,6 +8,12 @@ namespace CargoStrategy.Graphing
     public interface IGraphConnection
     {
 
+        bool IsDestroyed
+        {
+            get;
+            set;
+        }
+
         float Weight
         {
             get;
@@ -23,6 +29,16 @@ namespace CargoStrategy.Graphing
         {
             get;
         }
+
+        List<Vector3> GetRoute();
+
+        void Reconnect();
+        void Disconnect();
+
+        void DestroyConnection();
+
+        void RegisterUnit();
+        void UnRegisterUnit();
 
     }
 

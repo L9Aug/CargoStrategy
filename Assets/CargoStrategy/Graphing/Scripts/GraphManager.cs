@@ -7,6 +7,8 @@ namespace CargoStrategy.Graphing
 
     public class GraphManager : IGraphManager
     {
+        public List<IGraphNode> NodeNetwork = new List<IGraphNode>();
+
         IGraphCalculator m_graphCalculator;
 
         public GraphManager()
@@ -18,6 +20,7 @@ namespace CargoStrategy.Graphing
         {
             return m_graphCalculator.Run(start, end, team);
         }
+
     }
 
 }

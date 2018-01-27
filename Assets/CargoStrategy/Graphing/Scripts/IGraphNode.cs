@@ -30,6 +30,11 @@ namespace CargoStrategy.Graphing
         {
             get;
         }
+
+        int Team
+        {
+            get;
+        }
         
         List<IGraphNode> GetNodeConnections();
 
