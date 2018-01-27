@@ -67,9 +67,12 @@ namespace CargoStrategy.Units
             ++storedSupply;
         }
 
-        public void Convert(TeamIds nTeam)
+        public virtual void Convert(TeamIds nTeam)
         {
             m_team = nTeam;
+            storedSupply = 0;
+            m_productionProgress = 0;
+            UnitManager.Instance.BuildingConverted(this);
         }
 
     }

@@ -103,13 +103,13 @@ namespace CargoStrategy.Units
 
         protected virtual void ArrivedAtTarget()
         {
-            Debug.Log("Arrived At Target!");
+            //Debug.Log("Arrived At Target!");
             this.Kill();
         }
 
         protected virtual void GetNextMotionTarget()
         {
-            if (motionTarget == null)
+            if (!motionTarget.HasValue)
             {
                 // if there is no motion target then get one from the node connection.
                 m_currentTo = Path[m_pathProgress + 1];
@@ -129,6 +129,8 @@ namespace CargoStrategy.Units
                 {
                     ArrivedAtTarget();
                 }
+
+                if (!motionTarget.HasValue) return;
 
                 // if there is already a motion target check that we are within the threshold range.
                 if (Vector3.Distance(transform.position, motionTarget.Value) <= arrivalThreshold)

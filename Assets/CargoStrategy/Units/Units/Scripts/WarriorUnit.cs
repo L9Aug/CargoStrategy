@@ -22,11 +22,19 @@ namespace CargoStrategy.Units
 
         protected override void ArrivedAtTarget()
         {
-            Debug.Log("Warrior Arrived");
+            //Debug.Log("Warrior Arrived");
 
             ((BaseBuilding)m_targetNode).Convert(m_team);
 
             base.ArrivedAtTarget();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.GetComponent<BaseUnit>() != null)
+            {
+                other.GetComponent<BaseUnit>().Kill();
+            }
         }
 
     }
