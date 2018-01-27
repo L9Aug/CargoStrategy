@@ -121,7 +121,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 991f2c4e63f6b934791e36a9e926e117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProductionOutput: {fileID: 0}
-  OptimalOutputPerSecond: 0
+  m_team: 0
+  Connections: []
+  NodeConnections: []
+  ProductionOutput: {fileID: 114711829613904610, guid: 1fef85ea919da594e898d88eeba2b282,
+    type: 2}
+  OptimalOutputPerSecond: 1
   ProductionInput: {fileID: 0}
   InputTarget: 0

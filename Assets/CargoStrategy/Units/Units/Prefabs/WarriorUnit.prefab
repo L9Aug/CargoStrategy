@@ -73,6 +73,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4797536708147612}
+  - component: {fileID: 114642632444963738}
   m_Layer: 0
   m_Name: WarriorUnit
   m_TagString: Untagged
@@ -264,6 +265,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114642632444963738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786353615074728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb7ef2d5704814845a3ca310692ba4a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_team: 0
 --- !u!135 &135028180616724272
 SphereCollider:
   m_ObjectHideFlags: 1
