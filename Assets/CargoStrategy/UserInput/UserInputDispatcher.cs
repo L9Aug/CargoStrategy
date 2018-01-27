@@ -44,6 +44,22 @@ namespace CargoStrategy.UserInput
             }
         }
 
+
+        public void SubscribeToFireEvents(PlayerList player, System.Action del)
+        {
+            switch (player)
+            {
+                case PlayerList.Player1:
+                    Player1FiringEvent += del;
+                    break;
+                case PlayerList.Player2:
+                    Player2FiringEvent += del;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public float GetPlayerHorizontalMovement(PlayerList player)
         {
             float a;

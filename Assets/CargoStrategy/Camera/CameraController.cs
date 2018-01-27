@@ -13,9 +13,7 @@ namespace CargoStrategy.Camera
 
         public CannonController myCannon;
 
-        public GameObject myProjectile = null;
-
-        private void Start()
+        private void Awake()
         {
             SetupStateMachine();
         }
@@ -27,12 +25,14 @@ namespace CargoStrategy.Camera
 
         public void FollowCannon()
         {
-
+            transform.position = myCannon.CameraTarget.transform.position;
+            transform.localRotation = Quaternion.LookRotation(myCannon.CameraFocus.transform.position - myCannon.CameraTarget.transform.position);
         }
 
         public void FollowProjectile()
         {
-
+            transform.position = myCannon.myProjectile.CameraTarget.transform.position;
+            transform.localRotation = Quaternion.LookRotation(myCannon.myProjectile.CameraFocus.transform.position - myCannon.myProjectile.CameraTarget.transform.position);
         }
 
         public void MapView()
@@ -45,8 +45,8 @@ namespace CargoStrategy.Camera
         private void SetupStateMachine()
         {
             //Conditions
-            BoolCondition ShotFired = new BoolCondition(delegate() { return false; } );
-            BoolCondition ShotLanded = new BoolCondition(delegate () { return false; });
+            BoolCondition ShotFired = new BoolCondition(delegate() { return myCannon.myProjectile != null; } );
+            BoolCondition ShotLanded = new BoolCondition(delegate () { return myCannon.myProjectile == null; });
             BoolCondition OpenMapViewMode = new BoolCondition(delegate () { return false; });
             NotCondition CloseMapViewMode = new NotCondition(OpenMapViewMode);
             AndCondition CloseMapViewModeToProjectileFollow = new AndCondition(CloseMapViewMode, ShotLanded); 
@@ -86,6 +86,7 @@ namespace CargoStrategy.Camera
 
             //Setup Machine
             CameraMachine = new StateMachine(CanonFollowMode, CanonFollowMode, ProjectileFollowMode, MapViewMode);
+            CameraMachine.InitMachine();
         }
         
     }
