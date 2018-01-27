@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/CargoStrategy/Scenes/Intro.unity
+    guid: d6997485bb942d74fa3c4b225001d665
+  - enabled: 1
+    path: Assets/CargoStrategy/Scenes/Managers.unity
+    guid: 35e6cea364491604ab70f16fe7fac8a9
