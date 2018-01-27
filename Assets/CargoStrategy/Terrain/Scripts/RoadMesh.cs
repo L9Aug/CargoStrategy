@@ -17,7 +17,7 @@ namespace CargoStrategy.Terrain
         private RoadSection m_roadPrefab;
 
         [SerializeField]
-        private float m_prefabLength;
+        private float m_prefabLength = 1.0f;
 
         [SerializeField]
         private float m_heightOffset = 0.0f;
@@ -59,7 +59,7 @@ namespace CargoStrategy.Terrain
             {
                 RoadSection road = Instantiate(m_roadPrefab, transform);
                 road.transform.position = m_start.position + (direction * distanceFromstart)+ (Vector3.up * m_heightOffset);
-                road.transform.LookAt(m_end, Vector3.up);
+                road.transform.rotation = Quaternion.LookRotation(direction);
                 m_roadSections.Add(road);
                 distanceFromstart += m_prefabLength;
             }
