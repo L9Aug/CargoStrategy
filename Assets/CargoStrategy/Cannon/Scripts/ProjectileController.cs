@@ -30,6 +30,10 @@ namespace CargoStrategy.Cannon
             }
         }
 
+        public void OnCollisionEnter(Collision collision)
+        {
+            Destroy(gameObject);
+        }
 
 
     }

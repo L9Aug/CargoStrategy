@@ -45,7 +45,7 @@ namespace CargoStrategy.Camera
         private void SetupStateMachine()
         {
             //Conditions
-            BoolCondition ShotFired = new BoolCondition(delegate() { return false; return myCannon.myProjectile != null; } );
+            BoolCondition ShotFired = new BoolCondition(delegate() { return myCannon.myProjectile != null; } );
             BoolCondition ShotLanded = new BoolCondition(delegate () { return myCannon.myProjectile == null; });
             BoolCondition OpenMapViewMode = new BoolCondition(delegate () { return false; });
             NotCondition CloseMapViewMode = new NotCondition(OpenMapViewMode);
