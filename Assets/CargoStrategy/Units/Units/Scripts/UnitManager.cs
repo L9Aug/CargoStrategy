@@ -95,22 +95,17 @@ namespace CargoStrategy.Units
 
                         if (fromIndex != -1)
                         {
-                            if (fromIndex > 0)
+                            m_unitList[i].GetNewPath();
+                        }
+                        else
+                        {
+                            fromIndex = m_unitList[i].Path.IndexOf(lostConnection.To);
+
+                            if(fromIndex != -1)
                             {
-                                if (m_unitList[i].Path[fromIndex - 1] == lostConnection.To)
-                                {
-                                    // re calc path.
-                                    m_unitList[i].GetNewPath();
-                                }
+                                m_unitList[i].GetNewPath();
                             }
-                            else if (fromIndex < m_unitList[i].Path.Count - 2)
-                            {
-                                if (m_unitList[i].Path[fromIndex + 1] == lostConnection.To)
-                                {
-                                    // re calc path.
-                                    m_unitList[i].GetNewPath();
-                                }
-                            }
+
                         }
                     }
                 }

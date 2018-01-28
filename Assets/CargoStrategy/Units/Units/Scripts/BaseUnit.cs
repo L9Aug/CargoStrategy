@@ -21,6 +21,7 @@ namespace CargoStrategy.Units
         protected IGraphNode m_currentFrom;
         protected IGraphNode m_currentTo;
         protected IGraphNode m_targetNode;
+        protected IGraphNode m_previousNode;
         protected IGraphConnection m_currentConnection;
 
         protected const float angleThreshold = 0.1f;
@@ -85,12 +86,6 @@ namespace CargoStrategy.Units
             }
 
             motionTarget = null;
-
-            if(m_currentConnection != null)
-            {
-                m_currentConnection.UnRegisterUnit(this);
-            }
-            m_currentConnection = null;
 
             List<GraphNode> m_nodeTargets = GetNodeTargets();
 
@@ -160,134 +155,81 @@ namespace CargoStrategy.Units
                 if (Vector3.Distance(transform.position, motionTarget.Value) <= arrivalThreshold)
                 {
                     Path.RemoveAt(0);
-                    if(Path.Count > 0)
-                    {
-                        motionTarget = Path[0].Position;
-
-                        if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
-                        m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(Path[0]);
-                        if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
-
-                        m_currentFrom = Path[0];
-                    }
-                    else
-                    {
-                        motionTarget = m_targetNode.Position;
-
-                        if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
-                        m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(m_targetNode);
-                        if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
-
-                        m_currentFrom = m_targetNode;
-                    }
+                    AddConnection();
                 }
             }
             else
             {
-                if (Path.Count > 0)
-                {
-                    motionTarget = Path[0].Position;
-
-                    if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
-                    m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(Path[0]);
-                    if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
-
-                    m_currentFrom = Path[0];
-                }
-                else
-                {
-                    motionTarget = m_targetNode.Position;
-
-                    if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
-                    m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(m_targetNode);
-                    if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
-
-                    m_currentFrom = m_targetNode;
-                }
+                AddConnection();
             }
 
         }
 
-        /*
-        protected virtual void GetNextMotionTarget()
+        private void AddConnection()
         {
-            if (PrintRouteval) PrintRoute();
-
-            if(Path == null)
+            if (Path.Count > 0)
             {
-                motionTarget = null;
-                return;
-            }
+                motionTarget = Path[0].Position;
 
-            if (!motionTarget.HasValue)
-            {
-                // if there is no motion target then get one from the node connection.
-                m_currentTo = (m_pathProgress >= Path.Count - 2) ? m_targetNode : Path[m_pathProgress + 1];
-
-                SetupNewConnection();
-
-                // check to see if we are at the end of our path.
-                if (Vector3.Distance(transform.position, m_targetNode.Position) <= arrivalThreshold)
+                if (m_currentConnection != null)
                 {
-                    ArrivedAtTarget();
-                }
-            }
-            else
-            {
-                // check to see if we are at the end of our path.
-                if (Vector3.Distance(transform.position, m_targetNode.Position) <= arrivalThreshold)
-                {
-                    ArrivedAtTarget();
+                    m_currentConnection.UnRegisterUnit(this);
                 }
 
-                if (!motionTarget.HasValue) return;
-
-                // if there is already a motion target check that we are within the threshold range.
-                if (Vector3.Distance(transform.position, motionTarget.Value) <= arrivalThreshold)
+                if (m_currentFrom != Path[0])
                 {
-                    // if the current connection is null then we are at the center of a node and will need to update our status.
-                    if (m_currentConnection == null)
-                    {
-                        //m_pathProgress;
-                        Path.RemoveAt(0);
-                        if (m_pathProgress >= Path.Count - 1)
-                        {
-                            motionTarget = m_targetNode.Position;
-                        }
-                        else
-                        {
-                            m_currentFrom = Path[m_pathProgress];
-                            m_currentTo = Path[m_pathProgress + 1];
-                            SetupNewConnection();
-                        }
-                    }
-                    else
-                    {
-                        // if we are within the threshold then check to see if this connection has another point in it's path
-                        //if (m_connectionProgress - 1 < 0 || m_connectionProgress + 1 >= m_currentConnection.GetRoute().Count)
-                        if(m_connectionDirection > 0 ? m_connectionProgress + 1 >= m_currentConnection.GetRoute().Count : m_connectionProgress - 1 < 0)
-                        {
-                            motionTarget = m_currentTo.Position;
-                            m_currentConnection.UnRegisterUnit(this);
-                            m_currentConnection = null;
-                        }
-                        else
-                        {
-                            m_connectionProgress += m_connectionDirection;
-                            motionTarget = m_currentConnection.GetRoute()[m_connectionProgress];
-                        }
-                    }
-                    
+                    m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(Path[0]);;
                 }
                 else
                 {
-                    // if we are not within the threshold then do not do anything.
+                    if (m_previousNode != null)
+                    {
+                        m_currentConnection = m_previousNode.GetAdjacentConnectionTo(m_currentFrom);
+                    }
                 }
-                
-            }
 
+                if (m_currentConnection != null)
+                {
+                    m_currentConnection.RegisterUnit(this);
+                }
+                else
+                {
+                    //Debug.LogError("no connection");
+                }
+                m_previousNode = m_currentFrom;
+                m_currentFrom = Path[0];
+            }
+            else
+            {
+                motionTarget = m_targetNode.Position;
+
+                if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
+
+                if (m_currentFrom != m_targetNode)
+                {
+                    m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(m_targetNode);
+                }
+                else
+                {
+                    if (m_previousNode != null)
+                    {
+                        m_currentConnection = m_previousNode.GetAdjacentConnectionTo(m_currentFrom);
+                    }
+                }
+
+                if (m_currentConnection != null)
+                {
+                    m_currentConnection.RegisterUnit(this);
+                }
+                else
+                {
+                    //Debug.LogError("no connection");
+                }
+
+                m_previousNode = m_currentFrom;
+                m_currentFrom = m_targetNode;
+            }
         }
-        */
 
         protected void SetupNewConnection()
         {
