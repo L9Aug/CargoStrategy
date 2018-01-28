@@ -282,7 +282,7 @@ Prefab:
     - target: {fileID: 114027772246377748, guid: 5c30bec2adfcc2542ab0777233342b4c,
         type: 2}
       propertyPath: myPlayer
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1800051130319018, guid: 5c30bec2adfcc2542ab0777233342b4c, type: 2}
       propertyPath: m_IsActive
