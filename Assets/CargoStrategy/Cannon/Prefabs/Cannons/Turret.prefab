@@ -228,8 +228,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1800051130319018}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10.24, y: 7.37, z: 64.75}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 119.51, y: 7.37, z: 64.75}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4870748739538876}
@@ -237,7 +237,7 @@ Transform:
   - {fileID: 4204809948067668}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &4204809948067668
 Transform:
   m_ObjectHideFlags: 1
@@ -546,6 +546,7 @@ MonoBehaviour:
     type: 2}
   cannonBase: {fileID: 1123756238573130}
   cannonGun: {fileID: 1099547033680038}
+  cannonBarrelMovable: {fileID: 1977251718045998}
   CameraTarget: {fileID: 1176913363228046}
   CameraFocus: {fileID: 1416891658744494}
   ProjectileSpawnPoint: {fileID: 1112490808711342}
