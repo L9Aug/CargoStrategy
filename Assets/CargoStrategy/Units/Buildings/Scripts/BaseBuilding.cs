@@ -28,7 +28,7 @@ namespace CargoStrategy.Units
         protected float m_productionProgress = 0;
 
         [SerializeField]
-        private TeamColorComponent m_colorComponent = null;
+        private List<TeamColorComponent> m_colorComponents = new List<TeamColorComponent>();
 
         public void HaltProduction()
         {
@@ -42,9 +42,9 @@ namespace CargoStrategy.Units
         {
             GraphManager.Instance.NodeNetwork.Add(this);
             // TODO SetColour?
-            if (m_colorComponent != null)
+            for (int i  = 0; i < m_colorComponents.Count; i++)
             {
-                m_colorComponent.SetTeam(m_team);
+                m_colorComponents[i].SetTeam(m_team);
             }
         }
 
@@ -98,9 +98,9 @@ namespace CargoStrategy.Units
             UnitManager.Instance.BuildingConverted(this);
 
             // TODO Change Colour?
-            if (m_colorComponent != null)
+            for (int i = 0; i < m_colorComponents.Count; i++)
             {
-                m_colorComponent.SetTeam(m_team);
+                m_colorComponents[i].SetTeam(m_team);
             }
         }
 

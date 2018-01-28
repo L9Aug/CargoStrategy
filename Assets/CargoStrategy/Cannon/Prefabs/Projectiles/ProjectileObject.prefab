@@ -196,6 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c26270be109504c9cab81c47446e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ExplosionPrefab: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 2}
   m_blastRange: 2
   CameraFocus: {fileID: 1650130915809706}
   CameraTarget: {fileID: 1477964700848404}

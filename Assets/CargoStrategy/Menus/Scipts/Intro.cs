@@ -41,7 +41,6 @@ namespace CargoStrategy.Menus
         {
             SceneStreamingManager.Instance.OnAllScenesActive -= UnloadIntro;
             SceneStreamingManager.Instance.UnloadScene(gameObject.scene.name);
-            DynamicGI.UpdateEnvironment();
         }
     }
 
