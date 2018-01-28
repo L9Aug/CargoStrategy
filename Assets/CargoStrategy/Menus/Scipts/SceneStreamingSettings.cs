@@ -7,6 +7,8 @@ namespace CargoStrategy.Menus
     {
         public const string ManagersScene = "Managers";
 
+        public const string IntroScene = "Intro";
+
         public const string GameScenePrefix = "GameScene";
 
         public static readonly string[] GameSceneSuffixes = { "Design", "Art" };

@@ -57,6 +57,14 @@ namespace CargoStrategy.Cannon
             }
         }
 
+        private void OnDestroy()
+        {
+            if (UserInputDispatcher.HasInstance())
+            {
+                UserInputDispatcher.Instance.UnsubscribeToFireEvents(myPlayer, FireClicked);
+            }
+        }
+
 
         #region Cannon movement
         private void SetCannonYaw(float yawAmount)

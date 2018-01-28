@@ -136,8 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b885f1856ca817409499c20631582cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VictoryScreen: {fileID: 1806186356438106, guid: 230a15a534beb24469b849b1f2aa5646,
+  VictoryScreenPrefab: {fileID: 1806186356438106, guid: 230a15a534beb24469b849b1f2aa5646,
     type: 2}
+  GameResetDelay: 5
 --- !u!4 &776784575
 Transform:
   m_ObjectHideFlags: 0

@@ -49,5 +49,23 @@ namespace CargoStrategy.Intro {
 
 
         }
+
+        void OnDestroy()
+        {
+            if (UserInput.UserInputDispatcher.HasInstance())
+            {
+                switch (myCannon.myPlayer)
+                {
+                    case UserInput.UserInputDispatcher.PlayerList.Player1:
+                        UserInput.UserInputDispatcher.Instance.Player1Start -= ToggleReadyStatus;
+                        break;
+                    case UserInput.UserInputDispatcher.PlayerList.Player2:
+                        UserInput.UserInputDispatcher.Instance.Player2Start -= ToggleReadyStatus;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }
