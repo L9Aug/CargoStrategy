@@ -36,7 +36,7 @@ namespace CargoStrategy.Camera
 
 
              transform.localRotation = Quaternion.LookRotation((myCannon.CameraFocus.transform.position + lookOffset) - myCannon.CameraTarget.transform.position);*/
-            transform.localRotation = GetLookRotation();
+            transform.rotation = GetLookRotation();
         }
 
 
@@ -48,7 +48,7 @@ namespace CargoStrategy.Camera
             Vector3 lookOffset = myCannon.myProjectile.transform.right * UserInput.UserInputDispatcher.Instance.GetPlayerHorizontalLook(myCannon.myPlayer) * lookMax +
                                    myCannon.myProjectile.transform.up * UserInput.UserInputDispatcher.Instance.GetPlayerVerticalLook(myCannon.myPlayer) * lookMax;
 
-            transform.localRotation = Quaternion.LookRotation((myCannon.myProjectile.CameraFocus.transform.position + lookOffset) - myCannon.myProjectile.CameraTarget.transform.position);
+            transform.rotation = Quaternion.LookRotation((myCannon.myProjectile.CameraFocus.transform.position + lookOffset) - myCannon.myProjectile.CameraTarget.transform.position);
 
         }
 
