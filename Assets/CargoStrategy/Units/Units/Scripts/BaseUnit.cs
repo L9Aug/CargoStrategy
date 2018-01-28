@@ -91,7 +91,7 @@ namespace CargoStrategy.Units
 
             if(m_nodeTargets == null)
             {
-                Debug.LogError("No Targets to go to. Killing Self." + this);
+                Debug.Log("No Targets to go to. Killing Self." + this);
                 this.Kill();
                 return;
             }
