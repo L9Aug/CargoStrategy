@@ -65,12 +65,14 @@ namespace CargoStrategy.Units
                 }
                 else
                 {
-
-                    int nodeIndex = m_unitList[i].Path.IndexOf(node);
-
-                    if (nodeIndex > 0)
+                    if (m_unitList[i].Path != null)
                     {
-                        m_unitList[i].GetNewPath();
+                        int nodeIndex = m_unitList[i].Path.IndexOf(node);
+
+                        if (nodeIndex > 0)
+                        {
+                            m_unitList[i].GetNewPath();
+                        }
                     }
                 }
             }
