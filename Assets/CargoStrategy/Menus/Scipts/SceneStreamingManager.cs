@@ -102,6 +102,7 @@ namespace CargoStrategy.Menus
                 if (finished)
                 {
                     m_activatingScenes = false;
+                    DynamicGI.UpdateEnvironment();
                     if (OnAllScenesActive != null)
                     {
                         OnAllScenesActive();

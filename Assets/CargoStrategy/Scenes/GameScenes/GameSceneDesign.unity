@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -86,7 +86,8 @@ LightmapSettings:
     m_PVRFilteringAtrousColorSigma: 1
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000006, guid: 2103764bad076d147973518503d6392d,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -1537,6 +1538,11 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 114027772246377748, guid: 5c30bec2adfcc2542ab0777233342b4c,
+        type: 2}
+      propertyPath: myPlayer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5c30bec2adfcc2542ab0777233342b4c, type: 2}
   m_IsPrefabParent: 0
@@ -2054,11 +2060,6 @@ Prefab:
     - target: {fileID: 1800051130319018, guid: 5c30bec2adfcc2542ab0777233342b4c, type: 2}
       propertyPath: m_Name
       value: Turret (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114027772246377748, guid: 5c30bec2adfcc2542ab0777233342b4c,
-        type: 2}
-      propertyPath: myPlayer
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5c30bec2adfcc2542ab0777233342b4c, type: 2}

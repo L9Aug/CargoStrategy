@@ -16,6 +16,8 @@ namespace CargoStrategy.Cannon
         public GameObject CameraFocus;
         public GameObject ProjectileSpawnPoint;
 
+        [SerializeField]
+        private TeamColorComponent m_colorComponent = null;
 
         public List<ParticleSystem> FireParticleEffects = new List<ParticleSystem> ();
 
@@ -40,6 +42,10 @@ namespace CargoStrategy.Cannon
         private void Awake()
         {
             UserInputDispatcher.Instance.SubscribeToFireEvents(myPlayer, FireClicked);
+            if (m_colorComponent != null)
+            {
+                m_colorComponent.SetTeam((Units.TeamIds)((int)myPlayer + 1));
+            }
         }
 
         private void Update()
