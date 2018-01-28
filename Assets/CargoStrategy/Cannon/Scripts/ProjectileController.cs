@@ -34,12 +34,16 @@ namespace CargoStrategy.Cannon
 
         public void Update()
         {
-            transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity);
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                transform.rotation = Quaternion.LookRotation(rb.velocity);
+            }
             if ((Time.time - timeFired > ShotLifespan) || Collided)
             {
                 TimeDestroyed = Time.time - timeFired;
                 Destroy(myModel);
-                Destroy(GetComponent<Rigidbody>());
+                Destroy(rb);
                 StartCoroutine(DeleteGO());
             }
 
