@@ -24,7 +24,7 @@ namespace CargoStrategy.Units
         protected IGraphConnection m_currentConnection;
 
         protected const float angleThreshold = 0.1f;
-        protected const float arrivalThreshold = 0.1f;
+        protected const float arrivalThreshold = 0.5f;
 
         protected StateMachine MotionMachine;
 
