@@ -56,19 +56,10 @@ namespace CargoStrategy.Units
             }
         }
 
-        private void Update()
-        {
-            if (ProductionOutput != null && m_team != TeamIds.Neutral)
-            {
-                // increase production progress.
-                m_productionProgress += OptimalOutputPerSecond * Time.deltaTime * GetProductionModifierFromStorage();
-
-                if (m_productionProgress > 1)
-                {
-                    --m_productionProgress;
-                    CreateUnit();
-                }
-            }
+        protected virtual void Update()
+        {          
+            
+            
         }
 
         protected virtual float GetProductionModifierFromStorage()
@@ -93,7 +84,10 @@ namespace CargoStrategy.Units
 
         public void StockArrived()
         {
-            ++storedSupply;
+            //++storedSupply;
+
+            CreateUnit();
+
         }
 
         public virtual void Convert(TeamIds nTeam)

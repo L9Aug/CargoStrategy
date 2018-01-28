@@ -69,7 +69,7 @@ namespace CargoStrategy.Units
                     {
                         int nodeIndex = m_unitList[i].Path.IndexOf(node);
 
-                        if (nodeIndex > 0)
+                        if (nodeIndex >= 0)
                         {
                             m_unitList[i].GetNewPath();
                         }
