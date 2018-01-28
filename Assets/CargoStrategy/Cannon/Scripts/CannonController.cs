@@ -110,7 +110,6 @@ namespace CargoStrategy.Cannon
             while (RecoilTime <= RecoilDuration)
             {
                 Mathf.Clamp(RecoilTime += Time.deltaTime, 0, RecoilDuration);
-                Debug.Log(RecoilDistance * (Mathf.Pow((2 * (RecoilTime / RecoilDuration - 0.5f)), 2) - 1));
 
                 cannonBarrelMovable.transform.localPosition = new Vector3(cannonBarrelMovable.transform.localPosition.x, cannonBarrelMovable.transform.localPosition.y,
                                                                         RecoilDistance * (Mathf.Pow((2 * (RecoilTime / RecoilDuration - 0.5f)), 2) - 1));

@@ -17,29 +17,76 @@ namespace CargoStrategy.UserInput
         public event System.Action Player1FiringEvent;
         public event System.Action Player2FiringEvent;
 
+        public event System.Action Player1Start;
+        public event System.Action Player2Start;
+
         private void Start()
         {
 
         }
 
+
+        public void ResetEvents()
+        {
+            Player1FiringEvent = null;
+            Player2FiringEvent = null;
+            Player2Start = null;
+            Player2Start = null;
+        }
+
+        bool ActiveLastP1s = false;
+        bool ActiveLastP2s = false;
+
         private void Update()
         {
             if (Input.GetAxis("P1FireKey") > 0.5 || Input.GetAxis("P1Fire") > 0.5)
             {
+                Debug.Log("PLAYER 1 FIRING");
                 System.Action temp = Player1FiringEvent;
                 if (temp != null)
                 {
+                    Debug.Log("");
                     Player1FiringEvent();
                 }
             }
             if (Input.GetAxis("P2FireKey") > 0.5 || Input.GetAxis("P2Fire") > 0.5)
             {
+                Debug.Log("PLAYER 2 FIRING");
+
                 System.Action temp = Player1FiringEvent;
                 if (temp != null)
                 {
                     Player2FiringEvent();
                 }
             }
+
+            if (Input.GetAxis("P1Start") > 0.5)
+            {
+                if (ActiveLastP1s == false)
+                {
+                    System.Action temp = Player1Start;
+                    if (temp != null)
+                    {
+                        Player1Start();
+                    }
+                }
+                ActiveLastP1s = true;
+            }
+            else { ActiveLastP1s = false; }
+
+            if (Input.GetAxis("P2Start") > 0.5)
+            {
+                if (ActiveLastP2s == false)
+                {
+                    System.Action temp = Player2Start;
+                    if (temp != null)
+                    {
+                        Player2Start();
+                    }
+                }
+                ActiveLastP2s = true;
+            }
+            else { ActiveLastP2s = false; }
         }
 
 
@@ -138,6 +185,19 @@ namespace CargoStrategy.UserInput
                     return Input.GetAxis("P1MapOverview") > 0.2 ? true : false;
                 case PlayerList.Player2:
                     return Input.GetAxis("P2MapOverview") > 0.2 ? true : false;
+                default:
+                    return false;
+            }
+        }
+
+        public bool GetPlayerSelect(PlayerList player)
+        {
+            switch (player)
+            {
+                case PlayerList.Player1:
+                    return Input.GetAxis("P1Select") > 0.2 ? true : false;
+                case PlayerList.Player2:
+                    return Input.GetAxis("P2Select") > 0.2 ? true : false;
                 default:
                     return false;
             }
