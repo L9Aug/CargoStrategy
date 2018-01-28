@@ -20,6 +20,15 @@ namespace CargoStrategy.Menus
         public OnScenesEventDelegate OnAllScenesActive;
         private bool m_activatingScenes = false;
 
+
+        protected override void Awake()
+        {
+            base.Awake();
+#if !UNITY_EDITOR
+            SceneManager.LoadScene("Intro", LoadSceneMode.Additive);
+#endif
+        }
+
         public static void LoadManagers()
         {
             SceneManager.LoadScene(SceneStreamingSettings.ManagersScene, LoadSceneMode.Additive);

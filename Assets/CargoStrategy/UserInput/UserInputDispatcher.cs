@@ -41,7 +41,6 @@ namespace CargoStrategy.UserInput
         {
             if (Input.GetAxis("P1FireKey") > 0.5 || Input.GetAxis("P1Fire") > 0.5)
             {
-                Debug.Log("PLAYER 1 FIRING");
                 System.Action temp = Player1FiringEvent;
                 if (temp != null)
                 {
@@ -51,8 +50,6 @@ namespace CargoStrategy.UserInput
             }
             if (Input.GetAxis("P2FireKey") > 0.5 || Input.GetAxis("P2Fire") > 0.5)
             {
-                Debug.Log("PLAYER 2 FIRING");
-
                 System.Action temp = Player1FiringEvent;
                 if (temp != null)
                 {

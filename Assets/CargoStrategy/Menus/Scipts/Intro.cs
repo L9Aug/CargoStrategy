@@ -56,7 +56,7 @@ namespace CargoStrategy.Menus
         private void CompleteLoad()
         {
             SceneStreamingManager.Instance.OnAllScenesLoaded -= CompleteLoad;
-            SceneStreamingManager.Instance.OnAllScenesActive += UnloadIntro;
+            SceneStreamingManager.Instance.UnloadScene(gameObject.scene.name);
             SceneStreamingManager.Instance.ActivateScenes();
             
 
@@ -65,8 +65,6 @@ namespace CargoStrategy.Menus
 
         private void UnloadIntro()
         {
-            SceneStreamingManager.Instance.OnAllScenesActive -= UnloadIntro;
-            SceneStreamingManager.Instance.UnloadScene(gameObject.scene.name);
         }
     }
 
