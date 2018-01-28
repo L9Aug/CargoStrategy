@@ -14,7 +14,7 @@ namespace CargoStrategy.GameOver
         private void Start()
         {
             // set the text to whomever won.
-            VictorText.text = "Player " + (GameOverManager.Instance.Victor == Units.TeamIds.Player1 ? "1" : "2") + " is victorious!";
+            VictorText.text = (GameOverManager.Instance.Victor == Units.TeamIds.Player1 ? "Blue" : "Red") + "player is victorious!";
         }
         
         private void Update()

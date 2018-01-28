@@ -44,7 +44,6 @@ namespace CargoStrategy.UserInput
                 System.Action temp = Player1FiringEvent;
                 if (temp != null)
                 {
-                    Debug.Log("");
                     Player1FiringEvent();
                 }
             }
