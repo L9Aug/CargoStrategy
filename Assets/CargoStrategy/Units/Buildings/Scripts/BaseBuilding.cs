@@ -27,6 +27,9 @@ namespace CargoStrategy.Units
         // the current progress towards creating a new unit.
         protected float m_productionProgress = 0;
 
+        [SerializeField]
+        private TeamColorComponent m_colorComponent = null;
+
         private void Awake()
         {
             GraphManager.Instance.NodeNetwork.Add(this);

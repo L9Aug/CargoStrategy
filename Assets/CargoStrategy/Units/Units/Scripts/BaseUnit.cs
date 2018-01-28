@@ -38,6 +38,9 @@ namespace CargoStrategy.Units
         protected int m_connectionProgress;
         protected int m_connectionDirection;
 
+        [SerializeField]
+        private TeamColorComponent m_colorComponent = null;
+
         public void Initialise(IGraphNode startingNode, TeamIds team)
         {
             m_team = team;
@@ -46,7 +49,10 @@ namespace CargoStrategy.Units
             SetupMovementMachine();
 
             // TODO Change Colour?
-
+            if (m_colorComponent != null)
+            {
+                m_colorComponent.SetTeam(team);
+            }
         }
 
         protected abstract List<GraphNode> GetNodeTargets();
