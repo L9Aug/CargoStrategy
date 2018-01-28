@@ -16,8 +16,10 @@ namespace CargoStrategy.Units
 
             if (resultList == null || resultList.Count == 0) return null;
 
-            resultList.Sort((a, b) => { return a.SupplierCount[((int)m_team) - 1] < b.SupplierCount[((int)m_team) - 1] ? -1 : 1; });
-
+            if (resultList.Count > 1)
+            {
+                resultList.Sort((a, b) => { return a.SupplierCount[((int)m_team) - 1] < b.SupplierCount[((int)m_team) - 1] ? -1 : 1; });
+            }
             return resultList;
         }
 

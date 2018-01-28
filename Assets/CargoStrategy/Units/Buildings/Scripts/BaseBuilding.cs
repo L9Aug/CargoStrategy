@@ -42,7 +42,7 @@ namespace CargoStrategy.Units
 
         private void Update()
         {
-            if (ProductionOutput != null || m_team != TeamIds.Neutral)
+            if (ProductionOutput != null && m_team != TeamIds.Neutral)
             {
                 // increase production progress.
                 m_productionProgress += OptimalOutputPerSecond * Time.deltaTime * GetProductionModifierFromStorage();
