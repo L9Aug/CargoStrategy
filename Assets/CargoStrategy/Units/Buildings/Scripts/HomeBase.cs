@@ -16,6 +16,25 @@ namespace CargoStrategy.Units
             GameOver.GameOverManager.Instance.LaunchVictory(nTeam);
         }
 
+        protected override float GetProductionModifierFromStorage()
+        {
+            return 1;
+        }
+
+        protected override void Update()
+        {
+            if (ProductionOutput != null && m_team != TeamIds.Neutral)
+            {
+                // increase production progress.
+                m_productionProgress += OptimalOutputPerSecond * Time.deltaTime * GetProductionModifierFromStorage();
+
+                if (m_productionProgress > 1)
+                {
+                    --m_productionProgress;
+                    CreateUnit();
+                }
+            }
+        }
     }
 
 }
