@@ -11,7 +11,6 @@ namespace CargoStrategy.Graphing
         bool IsDestroyed
         {
             get;
-            set;
         }
 
         float Weight
@@ -37,8 +36,8 @@ namespace CargoStrategy.Graphing
 
         void DestroyConnection();
 
-        void RegisterUnit();
-        void UnRegisterUnit();
+        void RegisterUnit(Units.BaseUnit unit);
+        void UnRegisterUnit(Units.BaseUnit unit);
 
     }
 

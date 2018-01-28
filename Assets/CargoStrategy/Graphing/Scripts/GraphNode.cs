@@ -12,10 +12,16 @@ namespace CargoStrategy.Graphing
         protected float m_costSoFar;
         protected float m_estimatedTotalCost;
         protected float m_heuristic;
-        protected int m_team;
+        protected IGraphNode m_root;
+        public Units.TeamIds m_team;
+        protected int[] m_supplierCount = new int[2];
 
-        public List<IGraphConnection> Connections = new List<IGraphConnection>();
-        public List<IGraphNode> NodeConnections = new List<IGraphNode>();
+
+        [SerializeField]
+        public List<GraphConnection> Connections = new List<GraphConnection>();
+
+        [SerializeField]
+        public List<GraphNode> NodeConnections = new List<GraphNode>();
 
         public float CostSoFar
         {
@@ -55,6 +61,19 @@ namespace CargoStrategy.Graphing
             }
         }
 
+        public IGraphNode Root
+        {
+            get
+            {
+                return m_root;
+            }
+
+            set
+            {
+                m_root = value;
+            }
+        }
+
         public Vector3 Position
         {
             get
@@ -63,7 +82,7 @@ namespace CargoStrategy.Graphing
             }
         }
 
-        public int Team
+        public Units.TeamIds Team
         {
             get
             {
@@ -71,9 +90,22 @@ namespace CargoStrategy.Graphing
             }
         }
 
+        public int[] SupplierCount
+        {
+            get
+            {
+                return m_supplierCount;
+            }
+
+            set
+            {
+                m_supplierCount = value;
+            }
+        }
+
         public IGraphConnection GetAdjacentConnectionTo(IGraphNode to)
         {
-            return Connections.Find(x => x.To == to);
+            return Connections.Find(x => (x.To == to) || (x.From == to));
         }
 
         public float GetDistanceTo(IGraphNode node)
@@ -81,11 +113,32 @@ namespace CargoStrategy.Graphing
             return Vector3.Distance(transform.position, node.Position);
         }
 
-        public List<IGraphNode> GetNodeConnections()
+        public List<GraphNode> GetNodeConnections()
         {
             return NodeConnections;
         }
 
+        public void AddConnection(IGraphNode node)
+        {
+            if (!NodeConnections.Contains((GraphNode)node))
+            {
+                NodeConnections.Add((GraphNode)node);
+            }
+        }
+
+        public void RemoveConnection(IGraphNode node)
+        {
+            NodeConnections.Remove((GraphNode)node);
+        }
+
+        private void OnDrawGizmos()
+        {
+            for (int i = 0; i < NodeConnections.Count; i++)
+            {
+                Gizmos.DrawLine(Position, NodeConnections[i].Position);
+            }
+            
+        }
     }
 
 }

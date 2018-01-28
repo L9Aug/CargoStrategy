@@ -10,20 +10,26 @@ namespace CargoStrategy.Graphing
 
         protected List<IGraphNode> openList = new List<IGraphNode>();
         protected List<IGraphNode> closedList = new List<IGraphNode>();
+        protected List<IGraphNode> path = new List<IGraphNode>();
+
+        protected List<IGraphNode> NodeMap;
 
         protected IGraphNode startNode;
         protected IGraphNode targetNode;
-        protected int team;
+        protected Units.TeamIds m_team;
 
-        public List<IGraphNode> Run(IGraphNode start, IGraphNode end, int team)
+        public List<IGraphNode> Run(IGraphNode start, IGraphNode end, Units.TeamIds team)
         {
             startNode = start;
             targetNode = end;
+            m_team = team;
 
             openList.Clear();
             closedList.Clear();
+            path.Clear();
 
             start.CostSoFar = 0;
+            start.Root = null;
 
             openList.Add(start);
 
@@ -41,10 +47,20 @@ namespace CargoStrategy.Graphing
             }
 
             if (targetReached)
-            {
-                closedList.Reverse();
+            {                
+                IGraphNode current = targetNode;
+                
+                while(current.Root != null)
+                {
+                    path.Add(current);
+                    current = current.Root;
+                    path[path.Count - 1].Root = null;
+                }
 
-                return closedList;
+                path.Add(current);
+                path.Reverse();
+
+                return path;
             }
             else
             {
@@ -72,11 +88,11 @@ namespace CargoStrategy.Graphing
             // close the current node.
             CloseNode(node);
 
-            List<IGraphNode> connections = node.GetNodeConnections();
+            List<GraphNode> connections = node.GetNodeConnections();
 
             foreach(IGraphNode con in connections)
             {
-                if (con.Team == team || con == targetNode)
+                if (con.Team == m_team || con == targetNode)
                 {
                     if (closedList.Contains(con))
                     {
@@ -85,6 +101,7 @@ namespace CargoStrategy.Graphing
                             con.CostSoFar = node.CostSoFar + con.GetDistanceTo(node);
                             con.Heuristic = con.GetDistanceTo(targetNode);
                             con.EstimatedTotalCost = con.CostSoFar + con.Heuristic;
+                            con.Root = node;
                             closedList.Remove(con);
                             openList.Add(con);
                         }
@@ -94,6 +111,7 @@ namespace CargoStrategy.Graphing
                         con.CostSoFar = node.CostSoFar + con.GetDistanceTo(node);
                         con.Heuristic = con.GetDistanceTo(targetNode);
                         con.EstimatedTotalCost = con.CostSoFar + con.Heuristic;
+                        con.Root = node;
                         openList.Add(con);
                     }
                 }
@@ -104,7 +122,7 @@ namespace CargoStrategy.Graphing
         protected void CloseNode(IGraphNode node)
         {
             openList.Remove(node);
-            closedList.Remove(node);
+            closedList.Add(node);
         }
 
     }

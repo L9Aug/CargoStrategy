@@ -26,21 +26,38 @@ namespace CargoStrategy.Graphing
             set;
         }
 
+        IGraphNode Root
+        {
+            get;
+            set;
+        }
+
         Vector3 Position
         {
             get;
         }
 
-        int Team
+        Units.TeamIds Team
         {
             get;
         }
+
+        int[] SupplierCount
+        {
+            get;
+            set;
+        }
         
-        List<IGraphNode> GetNodeConnections();
+        List<GraphNode> GetNodeConnections();
 
         IGraphConnection GetAdjacentConnectionTo(IGraphNode to);
 
         float GetDistanceTo(IGraphNode node);
+
+        void AddConnection(IGraphNode node);
+
+        void RemoveConnection(IGraphNode node);
+
 
     }
 

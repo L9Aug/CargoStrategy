@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/CargoStrategy/Scenes/GameScenes/GameSceneDesign.unity
     guid: 9362ad948204ec449836707cef268a4f
+  - enabled: 0
+    path: Assets/CargoStrategy/Units/Scenes/UnitTestScene.unity
+    guid: d4f1b0073fff1634eb8c18be70707d0d
