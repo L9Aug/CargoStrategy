@@ -15,7 +15,7 @@ namespace CargoStrategy.Graphing
         public GraphNode m_from;
         [SerializeField]
         public GraphNode m_to;
-        public float m_repairTime;
+        public float m_repairTime = 5;
 
 
         public delegate void OnDestroyedDelegate();

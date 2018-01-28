@@ -25,7 +25,7 @@ namespace CargoStrategy.Terrain
         {
             RoadMeshes.Add(this);
             OnDestroyed += Destroy;
-            OnRepaired += OnRepaired;
+            OnRepaired += Repair;
             BuildMesh();
         }
 
