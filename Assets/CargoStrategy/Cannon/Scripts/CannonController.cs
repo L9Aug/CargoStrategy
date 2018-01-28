@@ -11,9 +11,11 @@ namespace CargoStrategy.Cannon
 
         public GameObject cannonBase;
         public GameObject cannonGun;
+        public GameObject cannonBarrelMovable;
         public GameObject CameraTarget;
         public GameObject CameraFocus;
         public GameObject ProjectileSpawnPoint;
+
 
         public List<ParticleSystem> FireParticleEffects = new List<ParticleSystem> ();
 
@@ -63,15 +65,6 @@ namespace CargoStrategy.Cannon
             //float rot = 100;//cannonGun.transform.localRotation.eulerAngles.x + pitchAmount * cannonPitchSpeed;//, cannonMinPitch, cannonMaxPitch);
             pitch = Mathf.Clamp(pitch + pitchAmount * cannonPitchSpeed, cannonMinPitch, cannonMaxPitch);
 
-            /*if (rot < 180)
-            {
-                rot = rot < cannonMaxPitch ? rot : cannonMaxPitch;
-            }
-            else
-            {
-                rot = rot > cannonMinPitch ? rot : cannonMinPitch;
-            }*/
-
             cannonGun.transform.localRotation = Quaternion.Euler(pitch, 0 , 0);
         }
 
@@ -90,6 +83,10 @@ namespace CargoStrategy.Cannon
         {
             myProjectile = Instantiate(ProjectilePrefab, ProjectileSpawnPoint.transform.position, Quaternion.identity ).GetComponent<ProjectileController>();
             myProjectile.Fire(cannonShotPower, cannonGun.transform);
+
+            RecoilTime = 0;
+            StartCoroutine(Recoil());
+
             foreach (ParticleSystem p in FireParticleEffects)
             {
                 p.Stop();
@@ -97,8 +94,28 @@ namespace CargoStrategy.Cannon
             }
         }
 
+        
+        float RecoilDuration = 0.25f;
+        float RecoilTime;
+        float RecoilDistance = 1.2f;
+        IEnumerator Recoil()
+        {
+            float startZ = cannonBarrelMovable.transform.localPosition.z;
+            while (RecoilTime <= RecoilDuration)
+            {
+                Mathf.Clamp(RecoilTime += Time.deltaTime, 0, RecoilDuration);
+                Debug.Log(RecoilDistance * (Mathf.Pow((2 * (RecoilTime / RecoilDuration - 0.5f)), 2) - 1));
 
+                cannonBarrelMovable.transform.localPosition = new Vector3(cannonBarrelMovable.transform.localPosition.x, cannonBarrelMovable.transform.localPosition.y,
+                                                                        RecoilDistance * (Mathf.Pow((2 * (RecoilTime / RecoilDuration - 0.5f)), 2) - 1));
+                
 
+                yield return null;
+            }
+
+            cannonBarrelMovable.transform.localPosition = new Vector3(cannonBarrelMovable.transform.localPosition.x, cannonBarrelMovable.transform.localPosition.y, startZ);
+            yield break;
+        }
 
         #endregion
 

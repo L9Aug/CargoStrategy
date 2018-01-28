@@ -19,8 +19,6 @@ namespace CargoStrategy.UserInput
 
         private void Start()
         {
-            Player1FiringEvent += delegate () { Debug.Log("Player 1 firing"); };
-            Player2FiringEvent += delegate () { Debug.Log("Player 2 firing"); };
 
         }
 

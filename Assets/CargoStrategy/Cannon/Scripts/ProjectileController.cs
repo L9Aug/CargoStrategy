@@ -8,6 +8,9 @@ namespace CargoStrategy.Cannon
     public class ProjectileController : MonoBehaviour
     {
         [SerializeField]
+        private GameObject ExplosionPrefab;
+
+        [SerializeField]
         private float m_blastRange = 5.0f;
 
         private const float ShotLifespan = 10;
@@ -30,6 +33,8 @@ namespace CargoStrategy.Cannon
         float TimeDestroyed;
         bool Collided = false;
 
+        GameObject EP;
+
         public event System.Action ProjectileDeletedEvent;
 
         public void Update()
@@ -44,6 +49,7 @@ namespace CargoStrategy.Cannon
                 TimeDestroyed = Time.time - timeFired;
                 Destroy(myModel);
                 Destroy(rb);
+
                 StartCoroutine(DeleteGO());
             }
 
@@ -54,13 +60,21 @@ namespace CargoStrategy.Cannon
         {
             yield return new WaitForSeconds(Camera.CameraController.cameraChangeDelay);
             Destroy(gameObject);
-
+            if (EP)
+            {
+                Destroy(EP);
+            }
             System.Action temp = ProjectileDeletedEvent;
             if (temp != null) { ProjectileDeletedEvent(); }
         }
 
         public void OnCollisionEnter(Collision collision)
         {
+            if (!EP)
+            {
+                EP = Instantiate<GameObject>(ExplosionPrefab, transform.position, Quaternion.identity);
+            }
+
             Collided = true;
             RoadMesh closestMesh = null;
             float closestDistance = -1.0f;

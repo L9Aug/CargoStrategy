@@ -10,7 +10,7 @@ namespace CargoStrategy.Camera
     public class CameraController : MonoBehaviour
     {
         private const float lookMax = 3;
-        public const float cameraChangeDelay = 0.6f;
+        public const float cameraChangeDelay = 0.4f;
 
         StateMachine CameraMachine;
 
