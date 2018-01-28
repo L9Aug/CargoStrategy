@@ -34,6 +34,7 @@ namespace CargoStrategy.Cannon
 
         public void Update()
         {
+            transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity);
             if ((Time.time - timeFired > ShotLifespan) || Collided)
             {
                 TimeDestroyed = Time.time - timeFired;

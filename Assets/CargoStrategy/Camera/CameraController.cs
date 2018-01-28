@@ -31,11 +31,12 @@ namespace CargoStrategy.Camera
 
             transform.position = myCannon.CameraTarget.transform.position;
 
-            Vector3 lookOffset = myCannon.transform.right * UserInput.UserInputDispatcher.Instance.GetPlayerHorizontalLook(myCannon.myPlayer) * lookMax +
-                         myCannon.transform.up * UserInput.UserInputDispatcher.Instance.GetPlayerVerticalLook(myCannon.myPlayer) * lookMax;
+            /* Vector3 lookOffset = myCannon.transform.right * UserInput.UserInputDispatcher.Instance.GetPlayerHorizontalLook(myCannon.myPlayer) * lookMax +
+                          myCannon.transform.up * UserInput.UserInputDispatcher.Instance.GetPlayerVerticalLook(myCannon.myPlayer) * lookMax;
 
 
-            transform.localRotation = Quaternion.LookRotation((myCannon.CameraFocus.transform.position + lookOffset) - myCannon.CameraTarget.transform.position);
+             transform.localRotation = Quaternion.LookRotation((myCannon.CameraFocus.transform.position + lookOffset) - myCannon.CameraTarget.transform.position);*/
+            transform.localRotation = GetLookRotation();
         }
 
 
@@ -51,11 +52,43 @@ namespace CargoStrategy.Camera
 
         }
 
-        float LerpTime = 0.3f;
+        private Quaternion GetLookRotation()
+        {
+            Vector3 lookOffset = myCannon.transform.right * UserInput.UserInputDispatcher.Instance.GetPlayerHorizontalLook(myCannon.myPlayer) * lookMax +
+             myCannon.transform.up * UserInput.UserInputDispatcher.Instance.GetPlayerVerticalLook(myCannon.myPlayer) * lookMax;
+
+
+            return Quaternion.LookRotation((myCannon.CameraFocus.transform.position + lookOffset) - myCannon.CameraTarget.transform.position);
+            //return Quaternion.LookRotation(myCannon.CameraTarget.transform.forward , myCannon.transform.up);
+        }
+
+        Quaternion TempLookRotation;
+        float MaxLerpTime = 0.5f;
+        float LerpTime = 0f;
+
+
+        [SerializeField]
+        public Transform Mapview;
+
+
 
         public void MapView()
         {
+            LerpTime = Mathf.Clamp(LerpTime + Time.deltaTime * (UserInput.UserInputDispatcher.Instance.GetPlayerMapInput(myCannon.myPlayer) ? 1: -1), 0, MaxLerpTime);
 
+            switch (myCannon.myPlayer)
+            {
+                case UserInput.UserInputDispatcher.PlayerList.Player1:
+                    transform.position = Vector3.Lerp(myCannon.CameraTarget.transform.position, Mapview.position, LerpTime / MaxLerpTime);
+                    transform.localRotation = Quaternion.Slerp(TempLookRotation, Mapview.rotation, LerpTime / MaxLerpTime);
+                    break;
+                case UserInput.UserInputDispatcher.PlayerList.Player2:
+                    transform.position = Vector3.Lerp(myCannon.CameraTarget.transform.position, Mapview.position, LerpTime / MaxLerpTime);
+                    transform.localRotation = Quaternion.Slerp(TempLookRotation, Mapview.rotation, LerpTime / MaxLerpTime);
+                    break;
+                default:
+                    break;
+            }
 
         }
 
@@ -75,7 +108,7 @@ namespace CargoStrategy.Camera
             BoolCondition ShotLanded2 = new BoolCondition(delegate () { return myCannon.myProjectile.myModel == null; });
             BoolCondition ShotLandedAndWait = new BoolCondition(delegate () { return CurrentParentProjRemoved; });
             BoolCondition OpenMapViewMode = new BoolCondition(delegate () { return UserInput.UserInputDispatcher.Instance.GetPlayerMapInput(myCannon.myPlayer); });
-            NotCondition CloseMapViewMode = new NotCondition(OpenMapViewMode);
+            BoolCondition CloseMapViewMode = new BoolCondition(delegate() { return LerpTime == 0 && !UserInput.UserInputDispatcher.Instance.GetPlayerMapInput(myCannon.myPlayer); });
 
             //Transitions
             Transition ShotFiredTrans = new Transition("Shot fired", ShotFired, new List<Action>() { delegate () { myCannon.myProjectile.ProjectileDeletedEvent += delegate () { CurrentParentProjRemoved = true;}; }  });
@@ -113,9 +146,9 @@ namespace CargoStrategy.Camera
 
             State MapViewMode = new State("Cannon follow mode",
                 new List<Transition>() { CloseMapViewModeTrans },
-                new List<Action>() { },
+                new List<Action>() { delegate () { LerpTime = 0; TempLookRotation = GetLookRotation(); } },
                 new List<Action>() { MapView },
-                new List<Action>() { });
+                new List<Action>() { delegate() { TempLookRotation = Quaternion.identity; } });
 
             //Targets
             ShotFiredTrans.SetTargetState(CannonWatchMode);

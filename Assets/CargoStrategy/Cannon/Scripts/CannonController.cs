@@ -25,10 +25,12 @@ namespace CargoStrategy.Cannon
         #region constants
         private const float cannonYawSpeed = 2f;
         private const float cannonPitchSpeed = 2f;
-        private const float cannonMaxPitch = 10f;
-        private const float cannonMinPitch = 300f;
+        private const float cannonMaxPitch = 100;
+        private const float cannonMinPitch = 30;
 
         private const float cannonShotPower = 100;
+
+        private const float defaultPitch = 90;
         #endregion
 
 
@@ -51,24 +53,27 @@ namespace CargoStrategy.Cannon
         #region Cannon movement
         private void SetCannonYaw(float yawAmount)
         {
-            cannonBase.transform.Rotate(0, yawAmount * cannonYawSpeed, 0);
+            cannonBase.transform.Rotate(0, yawAmount * cannonYawSpeed, 0, Space.World);
         }
 
+        float pitch = defaultPitch;
 
         private void SetCannonPitch(float pitchAmount)
         {
-            float rot = cannonGun.transform.localRotation.eulerAngles.x + pitchAmount * cannonPitchSpeed;
+            //float rot = 100;//cannonGun.transform.localRotation.eulerAngles.x + pitchAmount * cannonPitchSpeed;//, cannonMinPitch, cannonMaxPitch);
+            pitch = Mathf.Clamp(pitch + pitchAmount * cannonPitchSpeed, cannonMinPitch, cannonMaxPitch);
+            Debug.Log(pitch);
 
-            if (rot < 180)
+            /*if (rot < 180)
             {
                 rot = rot < cannonMaxPitch ? rot : cannonMaxPitch;
             }
             else
             {
                 rot = rot > cannonMinPitch ? rot : cannonMinPitch;
-            }
+            }*/
 
-            cannonGun.transform.localRotation = Quaternion.Euler(rot, 0 , 0);
+            cannonGun.transform.localRotation = Quaternion.Euler(pitch, 0 , 0);
         }
 
         #endregion
