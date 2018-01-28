@@ -27,6 +27,19 @@ namespace CargoStrategy.Units
         // the current progress towards creating a new unit.
         protected float m_productionProgress = 0;
 
+        private void Awake()
+        {
+            GraphManager.Instance.NodeNetwork.Add(this);
+        }
+
+        private void OnDestroy()
+        {
+            if (GraphManager.HasInstance())
+            {
+                GraphManager.Instance.NodeNetwork.Remove(this);
+            }
+        }
+
         private void Update()
         {
             if (ProductionOutput != null || m_team != TeamIds.Neutral)

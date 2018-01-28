@@ -67,7 +67,7 @@ namespace CargoStrategy.Terrain
                 RoadMesh[] roads = FindObjectsOfType<RoadMesh>();
                 for (int i = 0; i < roads.Length; i++)
                 {
-                    FlattenLine(verticies, roads[i].Start.position, roads[i].End.position, m_roadWidth);
+                    FlattenLine(verticies, roads[i].From.Position, roads[i].To.Position, m_roadWidth);
                 }
                 m_mesh.SetVertices(verticies);
                 m_mesh.SetUVs(0, uv);

@@ -11,7 +11,6 @@ namespace CargoStrategy.Graphing
         bool IsDestroyed
         {
             get;
-            set;
         }
 
         float Weight

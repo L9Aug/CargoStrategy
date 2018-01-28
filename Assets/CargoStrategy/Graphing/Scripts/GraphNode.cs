@@ -16,7 +16,11 @@ namespace CargoStrategy.Graphing
         public Units.TeamIds m_team;
         protected int[] m_supplierCount = new int[2];
 
+
+        [SerializeField]
         public List<GraphConnection> Connections = new List<GraphConnection>();
+
+        [SerializeField]
         public List<GraphNode> NodeConnections = new List<GraphNode>();
 
         public float CostSoFar
@@ -127,6 +131,14 @@ namespace CargoStrategy.Graphing
             NodeConnections.Remove((GraphNode)node);
         }
 
+        private void OnDrawGizmos()
+        {
+            for (int i = 0; i < NodeConnections.Count; i++)
+            {
+                Gizmos.DrawLine(Position, NodeConnections[i].Position);
+            }
+            
+        }
     }
 
 }
