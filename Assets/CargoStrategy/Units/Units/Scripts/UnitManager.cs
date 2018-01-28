@@ -40,7 +40,7 @@ namespace CargoStrategy.Units
             }
             */
 
-            for(int i = 0; i < m_unitList.Count; ++i)
+            for (int i = 0; i < m_unitList.Count; ++i)
             {
                 int nodeIndex = m_unitList[i].Path.IndexOf(node);
 
@@ -59,14 +59,46 @@ namespace CargoStrategy.Units
 
         public void CheckForPathRecalculationAfterDestruction(IGraphConnection lostConnection)
         {
-            foreach(BaseUnit unit in m_unitList)
+            for (int i = 0; i < m_unitList.Count; ++i)
+            {
+                int fromIndex = m_unitList[i].Path.IndexOf(lostConnection.From);
+
+                if (fromIndex != -1)
+                {
+                    if (fromIndex > 0)
+                    {
+                        if (m_unitList[i].Path[fromIndex - 1] == lostConnection.To)
+                        {
+                            // re calc path.
+                            m_unitList[i].GetNewPath();
+                        }
+                    }
+
+                    if (fromIndex < m_unitList[i].Path.Count - 2)
+                    {
+                        if (m_unitList[i].Path[fromIndex + 1] == lostConnection.To)
+                        {
+                            // re calc path.
+                            m_unitList[i].GetNewPath();
+                        }
+                    }
+                }
+
+                if (m_unitList[i] == null)
+                {
+                    m_unitList.RemoveAt(i);
+                    --i;
+                }
+            }
+
+            foreach (BaseUnit unit in m_unitList)
             {
                 // check to see if one end of the connection was in use for this unit.
                 int fromIndex = unit.Path.IndexOf(lostConnection.From);
 
                 if (fromIndex != -1)
                 {
-                    if(fromIndex > 0)
+                    if (fromIndex > 0)
                     {
                         if (unit.Path[fromIndex - 1] == lostConnection.To)
                         {
@@ -75,7 +107,7 @@ namespace CargoStrategy.Units
                         }
                     }
 
-                    if(fromIndex < unit.Path.Count - 2)
+                    if (fromIndex < unit.Path.Count - 2)
                     {
                         if (unit.Path[fromIndex + 1] == lostConnection.To)
                         {

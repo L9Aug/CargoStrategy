@@ -76,6 +76,12 @@ namespace CargoStrategy.Units
 
             motionTarget = null;
 
+            if(m_currentConnection != null)
+            {
+                m_currentConnection.UnRegisterUnit(this);
+            }
+            m_currentConnection = null;
+
             List<GraphNode> m_nodeTargets = GetNodeTargets();
 
             if(m_nodeTargets == null)
@@ -167,6 +173,7 @@ namespace CargoStrategy.Units
                         if(m_connectionDirection > 0 ? m_connectionProgress + 1 >= m_currentConnection.GetRoute().Count : m_connectionProgress - 1 < 0)
                         {
                             motionTarget = m_currentTo.Position;
+                            m_currentConnection.UnRegisterUnit(this);
                             m_currentConnection = null;
                         }
                         else
@@ -196,6 +203,8 @@ namespace CargoStrategy.Units
                 Debug.LogError(string.Format("No connection between {0} and {1} killing self!", m_currentFrom, m_currentTo));
                 this.Kill();
             }
+
+            m_currentConnection.RegisterUnit(this);
 
             m_connectionDirection = m_currentConnection.From == m_currentFrom ? 1 : -1;
 

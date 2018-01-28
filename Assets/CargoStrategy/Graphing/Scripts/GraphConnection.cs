@@ -75,8 +75,6 @@ namespace CargoStrategy.Graphing
                 for(int i = 0; i < UnitsOnThisPath.Count; ++i)
                 {
                     UnitsOnThisPath[i].Kill();
-                    UnitsOnThisPath.RemoveAt(i);
-                    --i;
                 }
 
                 // send out an event to make units update thier paths if required.
