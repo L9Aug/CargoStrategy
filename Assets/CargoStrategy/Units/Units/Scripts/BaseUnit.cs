@@ -44,6 +44,9 @@ namespace CargoStrategy.Units
             m_currentFrom = startingNode;
             GetNewPath();
             SetupMovementMachine();
+
+            // TODO Change Colour?
+
         }
 
         protected abstract List<GraphNode> GetNodeTargets();

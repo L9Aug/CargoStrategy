@@ -30,6 +30,7 @@ namespace CargoStrategy.Units
         private void Awake()
         {
             GraphManager.Instance.NodeNetwork.Add(this);
+            // TODO SetColour?
         }
 
         private void OnDestroy()
@@ -86,6 +87,9 @@ namespace CargoStrategy.Units
             storedSupply = 0;
             m_productionProgress = 0;
             UnitManager.Instance.BuildingConverted(this);
+
+            // TODO Change Colour?
+
         }
 
     }
