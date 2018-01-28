@@ -130,7 +130,8 @@ MonoBehaviour:
   OptimalOutputPerSecond: 1
   ProductionInput: {fileID: 114711829613904610, guid: 1fef85ea919da594e898d88eeba2b282,
     type: 2}
-  InputTarget: 2
+  InputTarget: 1
+  m_colorComponent: {fileID: 0}
 --- !u!136 &136347732248863688
 CapsuleCollider:
   m_ObjectHideFlags: 1

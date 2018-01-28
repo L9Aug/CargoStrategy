@@ -126,6 +126,7 @@ MonoBehaviour:
   NodeConnections: []
   ProductionOutput: {fileID: 114711829613904610, guid: 1fef85ea919da594e898d88eeba2b282,
     type: 2}
-  OptimalOutputPerSecond: 1
+  OptimalOutputPerSecond: 0.1
   ProductionInput: {fileID: 0}
   InputTarget: 0
+  m_colorComponent: {fileID: 0}
