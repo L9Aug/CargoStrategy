@@ -27,6 +27,14 @@ namespace CargoStrategy.Units
         // the current progress towards creating a new unit.
         protected float m_productionProgress = 0;
 
+        public void HaltProduction()
+        {
+            storedSupply = 0;
+            InputTarget = 100;
+            OptimalOutputPerSecond = 0;
+            m_productionProgress = 0;
+        }
+
         private void Awake()
         {
             GraphManager.Instance.NodeNetwork.Add(this);

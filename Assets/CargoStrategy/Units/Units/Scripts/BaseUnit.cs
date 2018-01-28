@@ -127,7 +127,7 @@ namespace CargoStrategy.Units
             if (!motionTarget.HasValue)
             {
                 // if there is no motion target then get one from the node connection.
-                m_currentTo = Path[m_pathProgress + 1];
+                m_currentTo = (m_pathProgress >= Path.Count - 2) ? m_targetNode : Path[m_pathProgress + 1];
 
                 SetupNewConnection();
 
@@ -228,7 +228,8 @@ namespace CargoStrategy.Units
             //lerpTimer = Mathf.Clamp01(lerpTimer + (Time.deltaTime / lerpTime));
             //transform.rotation = Quaternion.Lerp(rotationStart, rotationEnd, lerpTimer);
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(motionTarget.Value - transform.position), Time.deltaTime * TurnSpeed);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(motionTarget.Value - transform.position), Time.deltaTime * TurnSpeed);
+            transform.rotation = Quaternion.LookRotation(motionTarget.Value - transform.position);
         }
 
         protected void MotionUpdate()

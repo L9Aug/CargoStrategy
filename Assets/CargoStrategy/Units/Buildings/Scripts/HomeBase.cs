@@ -12,8 +12,8 @@ namespace CargoStrategy.Units
         {
             base.Convert(nTeam);
 
-            // TODO Victory for nTeam.
-
+            // TODO [x] Victory for nTeam.
+            GameOver.GameOverManager.Instance.LaunchVictory(nTeam);
         }
 
     }

@@ -13,8 +13,6 @@ namespace CargoStrategy.Graphing
 
         private List<GraphNode> m_nodeNetwork = new List<GraphNode>();
 
-        IGraphCalculator m_graphCalculator;
-
         public GraphManager()
         {
             
@@ -46,6 +44,14 @@ namespace CargoStrategy.Graphing
             IGraphCalculator graphingCalc = new GraphCalculator();
 
             return graphingCalc.Run(start, end, team);
+        }
+
+        public void HaltProduction()
+        {
+            for(int i = 0; i < m_nodeNetwork.Count; ++i)
+            {
+                ((Units.BaseBuilding)m_nodeNetwork[i]).HaltProduction();
+            }
         }
 
     }
