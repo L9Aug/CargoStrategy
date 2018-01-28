@@ -163,6 +163,7 @@ namespace CargoStrategy.Units
                     {
                         motionTarget = Path[0].Position;
 
+                        if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
                         m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(Path[0]);
                         if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
 
@@ -172,6 +173,7 @@ namespace CargoStrategy.Units
                     {
                         motionTarget = m_targetNode.Position;
 
+                        if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
                         m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(m_targetNode);
                         if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
 
@@ -184,15 +186,21 @@ namespace CargoStrategy.Units
                 if (Path.Count > 0)
                 {
                     motionTarget = Path[0].Position;
+
+                    if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
                     m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(Path[0]);
                     if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
+
                     m_currentFrom = Path[0];
                 }
                 else
                 {
                     motionTarget = m_targetNode.Position;
+
+                    if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
                     m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(m_targetNode);
                     if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
+
                     m_currentFrom = m_targetNode;
                 }
             }

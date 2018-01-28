@@ -82,36 +82,41 @@ namespace CargoStrategy.Units
         {
             for (int i = 0; i < m_unitList.Count; ++i)
             {
-                int fromIndex = m_unitList[i].Path.IndexOf(lostConnection.From);
-
-                if (fromIndex != -1)
-                {
-                    if (fromIndex > 0)
-                    {
-                        if (m_unitList[i].Path[fromIndex - 1] == lostConnection.To)
-                        {
-                            // re calc path.
-                            m_unitList[i].GetNewPath();
-                        }
-                    }
-
-                    if (fromIndex < m_unitList[i].Path.Count - 2)
-                    {
-                        if (m_unitList[i].Path[fromIndex + 1] == lostConnection.To)
-                        {
-                            // re calc path.
-                            m_unitList[i].GetNewPath();
-                        }
-                    }
-                }
-
                 if (m_unitList[i] == null)
                 {
                     m_unitList.RemoveAt(i);
                     --i;
                 }
+                else
+                {
+                    if (m_unitList[i].Path != null)
+                    {
+                        int fromIndex = m_unitList[i].Path.IndexOf(lostConnection.From);
+
+                        if (fromIndex != -1)
+                        {
+                            if (fromIndex > 0)
+                            {
+                                if (m_unitList[i].Path[fromIndex - 1] == lostConnection.To)
+                                {
+                                    // re calc path.
+                                    m_unitList[i].GetNewPath();
+                                }
+                            }
+                            else if (fromIndex < m_unitList[i].Path.Count - 2)
+                            {
+                                if (m_unitList[i].Path[fromIndex + 1] == lostConnection.To)
+                                {
+                                    // re calc path.
+                                    m_unitList[i].GetNewPath();
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
+            /*
             foreach (BaseUnit unit in m_unitList)
             {
                 // check to see if one end of the connection was in use for this unit.
@@ -138,6 +143,7 @@ namespace CargoStrategy.Units
                     }
                 }
             }
+            */
         }
 
     }
