@@ -38,11 +38,15 @@ namespace CargoStrategy.Units
         protected int m_connectionProgress;
         protected int m_connectionDirection;
 
+        public bool PrintRouteval = false;
+
         [SerializeField]
         private TeamColorComponent m_colorComponent = null;
 
         public void Initialise(IGraphNode startingNode, TeamIds team)
         {
+           // Debug.Break();
+
             m_team = team;
             m_currentFrom = startingNode;
             GetNewPath();
@@ -105,10 +109,21 @@ namespace CargoStrategy.Units
                     m_targetNode = m_nodeTargets[i];
                     ++m_targetNode.SupplierCount[((int)m_team) - 1];
                     m_pathProgress = 0;
+                    if (PrintRouteval) PrintRoute();
                     break;
                 }
             }
 
+        }
+
+        protected void PrintRoute()
+        {
+            string s = "";
+            for(int i = 0; i < Path.Count; ++i)
+            {
+                s += Path[i] + ", ";
+            }
+            Debug.Log(s);
         }
 
         protected virtual void Update()
@@ -118,12 +133,90 @@ namespace CargoStrategy.Units
 
         protected virtual void ArrivedAtTarget()
         {
+            if (m_targetNode != null)
+            {
+                --m_targetNode.SupplierCount[((int)m_team) - 1];
+            }
             //Debug.Log("Arrived At Target!");
             this.Kill();
         }
 
         protected virtual void GetNextMotionTarget()
         {
+            if (PrintRouteval) PrintRoute();
+
+            if (Path == null)
+            {
+                GetNewPath();
+                motionTarget = null;
+                return;
+            }
+
+            // check to see if we are at the end of our path.
+            if (Vector3.Distance(transform.position, m_targetNode.Position) <= arrivalThreshold)
+            {
+                ArrivedAtTarget();
+            }
+
+            if (motionTarget.HasValue)
+            {
+                // if there is already a motion target check that we are within the threshold range.
+                if (Vector3.Distance(transform.position, motionTarget.Value) <= arrivalThreshold)
+                {
+                    Path.RemoveAt(0);
+                    if(Path.Count > 0)
+                    {
+                        motionTarget = Path[0].Position;
+
+                        if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
+                        m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(Path[0]);
+                        if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
+
+                        m_currentFrom = Path[0];
+                    }
+                    else
+                    {
+                        motionTarget = m_targetNode.Position;
+
+                        if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
+                        m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(m_targetNode);
+                        if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
+
+                        m_currentFrom = m_targetNode;
+                    }
+                }
+            }
+            else
+            {
+                if (Path.Count > 0)
+                {
+                    motionTarget = Path[0].Position;
+
+                    if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
+                    m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(Path[0]);
+                    if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
+
+                    m_currentFrom = Path[0];
+                }
+                else
+                {
+                    motionTarget = m_targetNode.Position;
+
+                    if (m_currentConnection != null) m_currentConnection.UnRegisterUnit(this);
+                    m_currentConnection = m_currentFrom.GetAdjacentConnectionTo(m_targetNode);
+                    if (m_currentConnection != null) m_currentConnection.RegisterUnit(this);
+
+                    m_currentFrom = m_targetNode;
+                }
+            }
+
+        }
+
+        /*
+        protected virtual void GetNextMotionTarget()
+        {
+            if (PrintRouteval) PrintRoute();
+
             if(Path == null)
             {
                 motionTarget = null;
@@ -198,6 +291,7 @@ namespace CargoStrategy.Units
             }
 
         }
+        */
 
         protected void SetupNewConnection()
         {
@@ -236,6 +330,8 @@ namespace CargoStrategy.Units
 
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(motionTarget.Value - transform.position), Time.deltaTime * TurnSpeed);
             transform.rotation = Quaternion.LookRotation(motionTarget.Value - transform.position);
+
+            GetNextMotionTarget();
         }
 
         protected void MotionUpdate()

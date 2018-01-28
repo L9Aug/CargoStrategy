@@ -92,6 +92,7 @@ namespace CargoStrategy.Graphing
                 {
                     OnDestroyed();
                 }
+
                 // begin countdown for repair.
                 StartCoroutine(RepairTimer());
             }

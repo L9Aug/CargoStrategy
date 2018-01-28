@@ -54,7 +54,7 @@ MonoBehaviour:
   m_weight: 0
   m_from: {fileID: 0}
   m_to: {fileID: 0}
-  m_repairTime: 0
+  m_repairTime: 5
   m_roadPrefab: {fileID: 114370753338869104, guid: d9460b3425d1f5b4fb6589b7e1556f6c,
     type: 2}
   m_prefabLength: 1

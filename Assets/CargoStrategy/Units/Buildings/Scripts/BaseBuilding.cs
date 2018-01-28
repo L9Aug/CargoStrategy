@@ -28,7 +28,7 @@ namespace CargoStrategy.Units
         protected float m_productionProgress = 0;
 
         [SerializeField]
-        private TeamColorComponent m_colorComponent = null;
+        private List<TeamColorComponent> m_colorComponents = new List<TeamColorComponent>();
 
         public void HaltProduction()
         {
@@ -42,9 +42,9 @@ namespace CargoStrategy.Units
         {
             GraphManager.Instance.NodeNetwork.Add(this);
             // TODO SetColour?
-            if (m_colorComponent != null)
+            for (int i  = 0; i < m_colorComponents.Count; i++)
             {
-                m_colorComponent.SetTeam(m_team);
+                m_colorComponents[i].SetTeam(m_team);
             }
         }
 
@@ -56,19 +56,10 @@ namespace CargoStrategy.Units
             }
         }
 
-        private void Update()
-        {
-            if (ProductionOutput != null && m_team != TeamIds.Neutral)
-            {
-                // increase production progress.
-                m_productionProgress += OptimalOutputPerSecond * Time.deltaTime * GetProductionModifierFromStorage();
-
-                if (m_productionProgress > 1)
-                {
-                    --m_productionProgress;
-                    CreateUnit();
-                }
-            }
+        protected virtual void Update()
+        {          
+            
+            
         }
 
         protected virtual float GetProductionModifierFromStorage()
@@ -93,7 +84,10 @@ namespace CargoStrategy.Units
 
         public void StockArrived()
         {
-            ++storedSupply;
+            //++storedSupply;
+
+            CreateUnit();
+
         }
 
         public virtual void Convert(TeamIds nTeam)
@@ -104,9 +98,9 @@ namespace CargoStrategy.Units
             UnitManager.Instance.BuildingConverted(this);
 
             // TODO Change Colour?
-            if (m_colorComponent != null)
+            for (int i = 0; i < m_colorComponents.Count; i++)
             {
-                m_colorComponent.SetTeam(m_team);
+                m_colorComponents[i].SetTeam(m_team);
             }
         }
 

@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4574099926485800}
   - component: {fileID: 33499953250622328}
   - component: {fileID: 23960654029235678}
+  - component: {fileID: 114818844440538780}
   m_Layer: 0
   m_Name: Cylinder006
   m_TagString: Untagged
@@ -228,8 +229,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1800051130319018}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 119.51, y: 7.37, z: 64.75}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 9.822, y: 7.358, z: 64.75}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4870748739538876}
@@ -550,13 +551,27 @@ MonoBehaviour:
   CameraTarget: {fileID: 1176913363228046}
   CameraFocus: {fileID: 1416891658744494}
   ProjectileSpawnPoint: {fileID: 1112490808711342}
+  m_colorComponent: {fileID: 114818844440538780}
   FireParticleEffects:
   - {fileID: 198227702380923546}
   - {fileID: 198128914249892242}
   - {fileID: 198630236088802262}
   - {fileID: 198015697138426984}
   myProjectile: {fileID: 0}
-  myPlayer: 0
+  myPlayer: 1
+--- !u!114 &114818844440538780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1123756238573130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc922b3e0f5f1147920b7e3a8fbd93e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_renderer: {fileID: 23960654029235678}
+  m_materialIds: 00000000
 --- !u!198 &198015697138426984
 ParticleSystem:
   m_ObjectHideFlags: 1

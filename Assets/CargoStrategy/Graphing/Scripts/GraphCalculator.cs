@@ -50,14 +50,14 @@ namespace CargoStrategy.Graphing
             {                
                 IGraphNode current = targetNode;
                 
-                while(current.Root != null)
+                while(current.Root != null && current != startNode)
                 {
                     path.Add(current);
                     current = current.Root;
                     path[path.Count - 1].Root = null;
                 }
 
-                path.Add(current);
+                path.Add(startNode);
                 path.Reverse();
 
                 return path;
@@ -87,6 +87,8 @@ namespace CargoStrategy.Graphing
         {
             // close the current node.
             CloseNode(node);
+
+            if (node.Team != m_team) return;
 
             List<GraphNode> connections = node.GetNodeConnections();
 
