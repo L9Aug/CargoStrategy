@@ -133,10 +133,6 @@ namespace CargoStrategy.Units
 
         protected virtual void ArrivedAtTarget()
         {
-            if (m_targetNode != null)
-            {
-                --m_targetNode.SupplierCount[((int)m_team) - 1];
-            }
             //Debug.Log("Arrived At Target!");
             this.Kill();
         }
@@ -147,6 +143,7 @@ namespace CargoStrategy.Units
 
             if (Path == null)
             {
+                GetNewPath();
                 motionTarget = null;
                 return;
             }

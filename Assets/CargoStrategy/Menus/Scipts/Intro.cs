@@ -9,6 +9,10 @@ namespace CargoStrategy.Menus
 
         private List<string> m_scenesToLoad = new List<string>();
 
+        [SerializeField]
+        private List<GameObject> TurnMeOnList;
+
+
         // Use this for initialization
         IEnumerator Start ()
         {
@@ -17,6 +21,25 @@ namespace CargoStrategy.Menus
                 SceneStreamingManager.LoadManagers();
                 yield return new WaitForEndOfFrame();
             }
+
+            foreach (GameObject go in TurnMeOnList)
+            {
+                go.SetActive(true);
+            }
+
+            bool Player1Ready = false;
+            bool Player2Ready = false;
+            UserInput.UserInputDispatcher.Instance.Player1Start += delegate () { Player1Ready = !Player1Ready; };
+            UserInput.UserInputDispatcher.Instance.Player2Start += delegate () { Player2Ready = !Player2Ready; };
+
+
+            while (!Player1Ready || !Player2Ready)
+            {
+                yield return null;
+            }
+
+            UserInput.UserInputDispatcher.Instance.ResetEvents();
+            
             LoadMainScene();
         }
 
@@ -35,6 +58,9 @@ namespace CargoStrategy.Menus
             SceneStreamingManager.Instance.OnAllScenesLoaded -= CompleteLoad;
             SceneStreamingManager.Instance.OnAllScenesActive += UnloadIntro;
             SceneStreamingManager.Instance.ActivateScenes();
+            
+
+
         }
 
         private void UnloadIntro()

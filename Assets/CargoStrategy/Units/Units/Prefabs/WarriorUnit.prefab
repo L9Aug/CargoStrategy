@@ -1119,7 +1119,9 @@ MonoBehaviour:
   m_team: 0
   MovementSpeed: 5
   TurnSpeed: 90
+  PrintRouteval: 0
   m_colorComponent: {fileID: 114456386622718388}
+  KillEffect: {fileID: 1445036593741448, guid: b7474bf0f3cdc6b4d92ed9a5bc5abde1, type: 2}
 --- !u!135 &135207832069890344
 SphereCollider:
   m_ObjectHideFlags: 1

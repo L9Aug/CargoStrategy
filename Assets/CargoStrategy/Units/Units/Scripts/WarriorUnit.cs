@@ -9,6 +9,8 @@ namespace CargoStrategy.Units
 
     public class WarriorUnit : BaseUnit
     {
+        public GameObject KillEffect;
+
         protected override List<GraphNode> GetNodeTargets()
         {
             List<GraphNode> resultList = GraphManager.Instance.NodeNetwork.FindAll(x => x.Team != m_team);
@@ -24,6 +26,8 @@ namespace CargoStrategy.Units
         {
             //Debug.Log("Warrior Arrived");
 
+            --m_targetNode.SupplierCount[((int)m_team) - 1];
+
             ((BaseBuilding)m_targetNode).Convert(m_team);
 
             base.ArrivedAtTarget();
@@ -35,6 +39,11 @@ namespace CargoStrategy.Units
             {
                 if (other.GetComponent<BaseUnit>().m_team != m_team)
                 {
+                    if (KillEffect != null)
+                    {
+                        GameObject nKillEffect = Instantiate(KillEffect);
+                        nKillEffect.transform.position = other.transform.position;
+                    }
                     other.GetComponent<BaseUnit>().Kill();
                 }
             }
