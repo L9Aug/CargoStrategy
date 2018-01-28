@@ -28,6 +28,7 @@ namespace CargoStrategy.Units
         public void BuildingConverted(IGraphNode node)
         {
             // if a building that the unit used in it's future path became converted then look for a new strategy.
+            /*
             foreach (BaseUnit unit in m_unitList)
             {
                 int nodeIndex = unit.Path.IndexOf(node);
@@ -35,6 +36,23 @@ namespace CargoStrategy.Units
                 if(nodeIndex > 0)
                 {
                     unit.GetNewPath();
+                }
+            }
+            */
+
+            for(int i = 0; i < m_unitList.Count; ++i)
+            {
+                int nodeIndex = m_unitList[i].Path.IndexOf(node);
+
+                if (nodeIndex > 0)
+                {
+                    m_unitList[i].GetNewPath();
+                }
+
+                if (m_unitList[i] == null)
+                {
+                    m_unitList.RemoveAt(i);
+                    --i;
                 }
             }
         }

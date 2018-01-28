@@ -109,6 +109,12 @@ namespace CargoStrategy.Units
 
         protected virtual void GetNextMotionTarget()
         {
+            if(Path == null)
+            {
+                motionTarget = null;
+                return;
+            }
+
             if (!motionTarget.HasValue)
             {
                 // if there is no motion target then get one from the node connection.

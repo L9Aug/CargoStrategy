@@ -97,12 +97,12 @@ namespace CargoStrategy.Graphing
 
             List<Vector3> resultList = new List<Vector3>();
 
-            resultList.Add(From.Position);
             resultList.Add(To.Position);
+            resultList.Add(From.Position);
 
             return resultList;
         }
-
+         
         public void Disconnect()
         {
             m_from.RemoveConnection(m_to);

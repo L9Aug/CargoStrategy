@@ -33,7 +33,10 @@ namespace CargoStrategy.Units
         {
             if(other.GetComponent<BaseUnit>() != null)
             {
-                other.GetComponent<BaseUnit>().Kill();
+                if (other.GetComponent<BaseUnit>().m_team != m_team)
+                {
+                    other.GetComponent<BaseUnit>().Kill();
+                }
             }
         }
 
