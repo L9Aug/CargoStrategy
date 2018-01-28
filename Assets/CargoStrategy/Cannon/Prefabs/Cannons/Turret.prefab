@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_renderer: {fileID: 23960654029235678}
-  m_materialIds: 00000000
+  m_materialIds: 
 --- !u!198 &198015697138426984
 ParticleSystem:
   m_ObjectHideFlags: 1
