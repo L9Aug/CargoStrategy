@@ -62,7 +62,6 @@ namespace CargoStrategy.Cannon
         {
             //float rot = 100;//cannonGun.transform.localRotation.eulerAngles.x + pitchAmount * cannonPitchSpeed;//, cannonMinPitch, cannonMaxPitch);
             pitch = Mathf.Clamp(pitch + pitchAmount * cannonPitchSpeed, cannonMinPitch, cannonMaxPitch);
-            Debug.Log(pitch);
 
             /*if (rot < 180)
             {

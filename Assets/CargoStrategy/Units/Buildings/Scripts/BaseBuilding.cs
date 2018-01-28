@@ -42,6 +42,10 @@ namespace CargoStrategy.Units
         {
             GraphManager.Instance.NodeNetwork.Add(this);
             // TODO SetColour?
+            if (m_colorComponent != null)
+            {
+                m_colorComponent.SetTeam(m_team);
+            }
         }
 
         private void OnDestroy()
@@ -100,7 +104,10 @@ namespace CargoStrategy.Units
             UnitManager.Instance.BuildingConverted(this);
 
             // TODO Change Colour?
-
+            if (m_colorComponent != null)
+            {
+                m_colorComponent.SetTeam(m_team);
+            }
         }
 
     }
