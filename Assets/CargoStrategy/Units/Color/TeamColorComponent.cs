@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CargoStrategy.Units;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,8 +13,8 @@ public class TeamColorComponent : MonoBehaviour {
 
     private List<Material> m_materialInstances = new List<Material>();
 
-    private Color m_team1Color = new Color32(80, 93, 134, 254);
-    private Color m_team2Color = new Color32(142, 76, 67, 254);
+    private Color m_team1Color = new Color32(0, 0, 254, 254);
+    private Color m_team2Color = new Color32(254, 0, 0, 254);
 
 
     private void Awake()
@@ -30,17 +31,17 @@ public class TeamColorComponent : MonoBehaviour {
         }
     }
 
-    private void SetTeam(int team)
+    public void SetTeam(TeamIds team)
     {
         if (m_renderer != null)
         {
             for (int i = 0; i < m_materialInstances.Count; i++)
             {
-                if (team == 1)
+                if (team == TeamIds.Player1)
                 {
                     m_materialInstances[i].SetColor("_Color", m_team1Color);
                 }
-                if (team == 2)
+                if (team == TeamIds.Player2)
                 {
                     m_materialInstances[i].SetColor("_Color", m_team2Color);
                 }

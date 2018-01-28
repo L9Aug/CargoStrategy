@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33434094714235680}
   - component: {fileID: 135053214321288830}
   - component: {fileID: 23762969953565272}
+  - component: {fileID: 114643794044916672}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -111,6 +112,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1475787493527498}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114643794044916672
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1475787493527498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc922b3e0f5f1147920b7e3a8fbd93e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_renderer: {fileID: 23762969953565272}
+  m_materialIds: 00000000
 --- !u!114 &114674767275152166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,12 +136,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621ac86097d9eb2409d06300c37611d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_team: 0
   Connections: []
   NodeConnections: []
   ProductionOutput: {fileID: 0}
   OptimalOutputPerSecond: 0
   ProductionInput: {fileID: 0}
   InputTarget: 0
+  m_colorComponent: {fileID: 114643794044916672}
 --- !u!135 &135053214321288830
 SphereCollider:
   m_ObjectHideFlags: 1
