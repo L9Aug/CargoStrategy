@@ -88,6 +88,8 @@ namespace CargoStrategy.Graphing
             // close the current node.
             CloseNode(node);
 
+            if (node.Team != m_team) return;
+
             List<GraphNode> connections = node.GetNodeConnections();
 
             foreach(IGraphNode con in connections)

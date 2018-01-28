@@ -147,6 +147,7 @@ namespace CargoStrategy.Units
 
             if (Path == null)
             {
+                GetNewPath();
                 motionTarget = null;
                 return;
             }
