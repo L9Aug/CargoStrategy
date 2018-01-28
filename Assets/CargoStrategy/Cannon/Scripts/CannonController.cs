@@ -41,11 +41,21 @@ namespace CargoStrategy.Cannon
 
         private void Awake()
         {
-            UserInputDispatcher.Instance.SubscribeToFireEvents(myPlayer, FireClicked);
             if (m_colorComponent != null)
             {
-                m_colorComponent.SetTeam((Units.TeamIds)((int)myPlayer + 1));
+                switch (myPlayer)
+                {
+                    case UserInputDispatcher.PlayerList.Player1:
+                        m_colorComponent.SetTeam(Units.TeamIds.Player1);
+                        break;
+                    case UserInputDispatcher.PlayerList.Player2:
+                        m_colorComponent.SetTeam(Units.TeamIds.Player2);
+                        break;
+                    default:
+                        break;
+                }
             }
+            UserInputDispatcher.Instance.SubscribeToFireEvents(myPlayer, FireClicked);
         }
 
         private void Update()

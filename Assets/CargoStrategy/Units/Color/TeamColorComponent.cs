@@ -37,14 +37,18 @@ public class TeamColorComponent : MonoBehaviour {
         {
             for (int i = 0; i < m_materialInstances.Count; i++)
             {
-                if (team == TeamIds.Player1)
+                switch (team)
                 {
-                    m_materialInstances[i].SetColor("_Color", m_team1Color);
+                    case TeamIds.Player1:
+                        m_materialInstances[i].SetColor("_Color", m_team1Color);
+                        break;
+                    case TeamIds.Player2:
+                        m_materialInstances[i].SetColor("_Color", m_team2Color);
+                        break;
+                    default:
+                        break;
                 }
-                if (team == TeamIds.Player2)
-                {
-                    m_materialInstances[i].SetColor("_Color", m_team2Color);
-                }
+                
             }
         }
     }
