@@ -94,7 +94,7 @@ namespace CargoStrategy.Units
         {
             m_team = nTeam;
             storedSupply = 0;
-            m_productionProgress = 0;
+            m_productionProgress = 0;           
             UnitManager.Instance.BuildingConverted(this);
 
             // TODO Change Colour?

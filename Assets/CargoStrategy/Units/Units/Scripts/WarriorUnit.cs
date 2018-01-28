@@ -26,6 +26,8 @@ namespace CargoStrategy.Units
         {
             //Debug.Log("Warrior Arrived");
 
+            --m_targetNode.SupplierCount[((int)m_team) - 1];
+
             ((BaseBuilding)m_targetNode).Convert(m_team);
 
             base.ArrivedAtTarget();
