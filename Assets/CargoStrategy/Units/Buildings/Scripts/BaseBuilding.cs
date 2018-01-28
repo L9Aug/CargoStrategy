@@ -30,6 +30,14 @@ namespace CargoStrategy.Units
         [SerializeField]
         private TeamColorComponent m_colorComponent = null;
 
+        public void HaltProduction()
+        {
+            storedSupply = 0;
+            InputTarget = 100;
+            OptimalOutputPerSecond = 0;
+            m_productionProgress = 0;
+        }
+
         private void Awake()
         {
             GraphManager.Instance.NodeNetwork.Add(this);
