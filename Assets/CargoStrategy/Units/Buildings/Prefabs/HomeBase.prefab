@@ -139,11 +139,12 @@ MonoBehaviour:
   m_team: 0
   Connections: []
   NodeConnections: []
-  ProductionOutput: {fileID: 0}
-  OptimalOutputPerSecond: 0
+  ProductionOutput: {fileID: 114642632444963738, guid: 2256fd5d77a7ef54bbbe07f3f9431049,
+    type: 2}
+  OptimalOutputPerSecond: 0.1
   ProductionInput: {fileID: 0}
   InputTarget: 0
-  m_colorComponent: {fileID: 114643794044916672}
+  m_colorComponents: []
 --- !u!135 &135053214321288830
 SphereCollider:
   m_ObjectHideFlags: 1
